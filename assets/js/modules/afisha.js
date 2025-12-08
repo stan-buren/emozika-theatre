@@ -146,7 +146,7 @@ export function initAfisha() {
                     return (
                         '<article class="afisha-card afisha-card--strip card-luxe" data-play-id="' +
                         play.id +
-                        '">' +
+                        '" data-play-trigger>' +
                         '<div class="afisha-card-poster-wrapper">' +
                         posterHtml +
                         (badgeHtml
@@ -160,16 +160,12 @@ export function initAfisha() {
                         '<h3 class="afisha-title">' +
                         play.title +
                         "</h3>" +
-                        note +
                         '<div class="afisha-buttons afisha-buttons--strip">' +
                         (play.ticketUrl
-                            ? '<a class="btn btn-primary btn-lg" href="' +
+                            ? '<a class="btn btn-primary btn-sm" href="' +
                             play.ticketUrl +
-                            '" target="_blank" rel="noopener">Купить билет</a>'
-                            : "") +
-                        '<button type="button" class="btn btn-outline btn-lg" data-play-open="' +
-                        play.id +
-                        '">Подробнее о спектакле</button>' +
+                            '" target="_blank" rel="noopener">Билеты</a>'
+                            : '<span class="afisha-no-tickets">Скоро в продаже</span>') +
                         "</div>" +
                         "</div>" +
                         "</article>"
@@ -337,13 +333,18 @@ export function initAfisha() {
         function bindAfishaEvents() {
             if (!stripEl) return;
 
-            // Кнопки «Подробнее о спектакле»
+            // Клик по карточке (открытие модалки)
             stripEl.addEventListener("click", function (event) {
-                const moreBtn = event.target.closest("[data-play-open]");
-                if (!moreBtn) {
+                // Если кликнули по кнопке/ссылке внутри (например, купить билет) — не открываем модалку
+                if (event.target.closest("a") || event.target.closest("button")) {
                     return;
                 }
-                const playId = moreBtn.getAttribute("data-play-open");
+
+                const card = event.target.closest("[data-play-trigger]");
+                if (!card) {
+                    return;
+                }
+                const playId = card.getAttribute("data-play-id");
                 if (playId) {
                     openPlayModal(playId);
                 }

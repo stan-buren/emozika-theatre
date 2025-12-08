@@ -12,14 +12,12 @@ export function initSnowQueen() {
                 (entries, obs) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                snowGrid.classList.add("snow-queen-grid--visible");
-                            }, 3000); // 3 секунды «чистого» фона
+                            snowGrid.classList.add("snow-queen-grid--visible");
                             obs.unobserve(entry.target);
                         }
                     });
                 },
-                { threshold: 0.4 }
+                { threshold: 0.2 }
             );
 
             observer.observe(snowSection);

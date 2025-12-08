@@ -394,39 +394,45 @@
     padding-bottom: 0;
 }
 
+.section-studio .timeline-step-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-brand-dark);
+    z-index: 1;
+    /* Above line */
+}
+
 .section-studio .timeline-step-marker {
     position: relative;
-    flex: 0 0 22px;
-    height: 22px;
+    flex: 0 0 28px;
+    height: 28px;
     border-radius: 999px;
-    background: rgba(122, 47, 180, 0.07);
+    background: #fff;
+    border: 2px solid rgba(122, 47, 180, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2px;
+    margin-top: 0;
+    transition: all 0.3s ease;
 }
 
 .section-studio .timeline-step-marker::before {
     content: "";
     position: absolute;
-    top: 22px;
+    top: 28px;
     left: 50%;
     width: 2px;
-    height: calc(100% - 22px);
+    height: calc(100% + 10px);
+    /* Connects to next */
     transform: translateX(-50%);
-    background: linear-gradient(to bottom,
-            rgba(122, 47, 180, 0.32),
-            rgba(122, 47, 180, 0));
+    background: rgba(122, 47, 180, 0.15);
+    z-index: 0;
 }
 
-.section-studio .timeline--vertical .timeline-step:last-child .timeline-step-marker::before {
-    display: none;
-}
-
-.section-studio .timeline-step-number {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-brand-dark);
+.section-studio .timeline--vertical .timeline-step:hover .timeline-step-marker {
+    border-color: var(--color-brand);
+    background: var(--color-brand-light);
+    transform: scale(1.1);
 }
 
 .section-studio .timeline-step-body {
@@ -610,11 +616,22 @@
     border: 1px solid rgba(122, 47, 180, 0.12);
     box-shadow: 0 12px 30px rgba(8, 2, 26, 0.04);
     overflow: hidden;
-    transition:
+    transform:
         transform 0.18s ease-out,
         box-shadow 0.18s ease-out,
         border-color 0.18s ease-out,
         background 0.18s ease-out;
+}
+
+.section-studio .studio-value-card::before {
+    content: "";
+    /* Icon placeholder */
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: rgba(122, 47, 180, 0.1);
+    border-radius: 8px;
+    margin-bottom: 12px;
 }
 
 /* лёгкий «свет» снизу, как от рампы */

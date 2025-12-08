@@ -186,11 +186,28 @@
 
 .films-card--active {
     border-color: var(--color-brand);
-    background: linear-gradient(135deg,
-            rgba(213, 154, 255, 0.16),
-            rgba(255, 255, 255, 0.98));
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px rgba(39, 5, 88, 0.22);
+    background: #fff;
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 3px rgba(122, 47, 180, 0.15), 0 20px 50px rgba(39, 5, 88, 0.2);
+}
+
+.films-card--active .films-card-poster-inner {
+    background: var(--color-brand);
+    animation: pulse-poster 2s infinite;
+}
+
+@keyframes pulse-poster {
+    0% {
+        box-shadow: 0 0 0 0 rgba(122, 47, 180, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(122, 47, 180, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(122, 47, 180, 0);
+    }
 }
 
 /* Кружочек-постер с буквой */

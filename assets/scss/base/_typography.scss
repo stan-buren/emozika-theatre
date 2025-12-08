@@ -1,0 +1,104 @@
+/* ===========================
+   2.2 ТИПОГРАФИКА (Typography)
+   =========================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text-main);
+    margin: 0 0 0.75em;
+}
+
+h1 {
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-weight: 800;
+    /* Extra bold for theatrical feel */
+}
+
+h2 {
+    font-size: 2.25rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+h6 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+/* Ссылки внутри текста */
+a {
+    color: var(--color-brand-dark);
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-brand);
+}
+
+/* Списки */
+ul,
+ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+}
+
+/* Премиальная цитата для отзывов или вставок */
+blockquote {
+    border-left: 2px solid var(--color-brand);
+    margin: 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 4rem;
+        /* Massive on desktop */
+    }
+
+    h2 {
+        font-size: 3rem;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+}

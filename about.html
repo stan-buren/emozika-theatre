@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>О театре и команде | Театр «Эмоцика»</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="История театра «Эмоцика», наша команда педагогов и режиссеров, отзывы родителей, фотогалерея и документы." />
+  <meta name="theme-color" content="#0f1224" />
+  <meta property="og:title" content="Детский театр «Эмоцика» — спектакли и занятия для детей" />
+  <meta property="og:description"
+    content="Спектакли, новогодние программы и студия для детей 4–16 лет в Санкт-Петербурге. Билеты и запись через администратора." />
+  <meta property="og:image" content="assets/img/posters/love-tank-hero.png" />
+  <meta property="og:url" content="https://emozia.ru" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <link rel="icon" type="image/png" href="assets/img/ui/favicon.png">
+  <link rel="shortcut icon" href="assets/img/ui/favicon.png" type="image/png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/ui/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/ui/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/ui/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/assets/scss/style.scss" />
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Перейти к содержимому</a>
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar" data-scroll-progress></div>
+  </div>
+  <div class="page-bg" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-badge" data-scroll-to="hero">
+        <img class="logo-mark" src="assets/img/ui/favicon.png" alt="Логотип театра «Эмоцика»" />
+        <span class="logo-text">Театр «Эмоцика»</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="afisha.html" class="nav-link">Афиша</a>
+        <a href="studio.html" class="nav-link">Студия</a>
+        <a href="studio.html#films" class="nav-link">Кино</a>
+        <a href="about.html" class="nav-link">О театре</a>
+        <a href="about.html#contacts" class="nav-link nav-link-pill">
+          Записаться
+        </a>
+      </nav>
+      <a href="https://clck.ru/3QWtC2" class="nav-link nav-link-cta header-cta" target="_blank" rel="noopener">
+        Купить билеты
+      </a>
+
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="section section-page-header">
+      <div class="container">
+        <h1 class="page-title">О театре</h1>
+      </div>
+    </section>
+    <section id="people" class="section section-people section-card reveal-on-scroll">
+      <div class="section-inner">
+        <div class="container">
+          <header class="section-header">
+            <h2 class="section-title section-title--handdrawn">Люди театра</h2>
+            <p class="section-subtitle">За спектаклями и занятиями в «Эмоцике» стоят режиссёры, педагоги, актёры и юные
+              артисты студии. Здесь только часть нашей команды и звёзд студии.</p>
+            <div class="section-chips">
+              <span class="chip">Режиссёры</span>
+              <span class="chip">Педагоги</span>
+              <span class="chip">Юные артисты</span>
+            </div>
+          </header>
+          <div class="people-shell">
+            <div class="people-filters" data-people-filters role="tablist" aria-label="Группы людей театра"></div>
+            <div class="people-layout" data-people-root></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!--
+    ========================================================================
+    Блок кастинга в фильмы КиноШколы «Эмоция»
+    ========================================================================
+    -->
+    <section id="stats" class="section section-facts reveal-on-scroll">
+      <div class="container">
+        <h2 class="section-title">Цифры и факты</h2>
+        <p class="section-subtitle">
+          За 12 лет студия «Эмоция» и театр «Эмоцика» выросли из маленькой студии в большую творческую семью.
+          Несколько цифр, которые помогают понять масштаб.
+        </p>
+        <div class="section-chips">
+          <span class="chip">12 лет опыта</span>
+          <span class="chip">15 филиалов</span>
+          <span class="chip">400+ детей</span>
+        </div>
+
+        <div class="facts-grid">
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="12" data-suffix=" лет">12 лет</h3>
+            <p class="fact-label">опыта в Петербурге</p>
+            <p class="fact-text">Работаем с 2013 года и продолжаем расти вместе с нашими учениками.</p>
+          </article>
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="15">15</h3>
+            <p class="fact-label">филиалов</p>
+            <p class="fact-text">Отделения в разных районах города и пригорода — родители выбирают удобную локацию.</p>
+          </article>
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="400" data-suffix="+">400+</h3>
+            <p class="fact-label">юных актёров</p>
+            <p class="fact-text">Одновременно занимаются около 400 детей, всего через студию прошли тысячи ребят.</p>
+          </article>
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="40" data-suffix="+">40+</h3>
+            <p class="fact-label">спектаклей в год</p>
+            <p class="fact-text">Каждый сезон — десятки отчётных и репертуарных спектаклей.</p>
+          </article>
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="10">10</h3>
+            <p class="fact-label">фильмов за 2024</p>
+            <p class="fact-text">Киношкола «Эмоция» выпустила десять короткометражек разных жанров.</p>
+          </article>
+          <article class="fact-card">
+            <h3 class="fact-number stat-number" data-target="50" data-suffix="+">50+</h3>
+            <p class="fact-label">наград</p>
+            <p class="fact-text">Гран-при и призы городских, всероссийских и международных фестивалей.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="awards" class="section section-awards reveal-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <!-- <p class="eyebrow eyebrow--dark">Часть фестивального пути</p> -->
+          <h2 class="section-title">Награды и фестивали</h2>
+          <p class="section-subtitle">Спектакли и фильмы «Эмоцики» регулярно получают гран-при и призы на российских
+            и международных конкурсах.</p>
+          <div class="section-chips">
+            <span class="chip chip--glass">Гран-при</span>
+            <span class="chip chip--glass">Дипломы жюри</span>
+            <span class="chip chip--glass">Россия + мир</span>
+          </div>
+        </div>
+        <div class="awards-strip awards-strip--auto" aria-label="Главные фестивальные награды" data-awards-strip>
+          <div class="awards-strip-viewport">
+            <div class="awards-strip-inner" data-top-awards-root></div>
+          </div>
+        </div>
+        <div class="awards-festivals">
+          <h3 class="awards-festivals-title">Фестивали последних лет</h3>
+          <div class="awards-festivals-grid" data-festivals-root></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!--
+    ========================================================================
+    Блок отзывов
+    ========================================================================
+    -->
+    <section id="reviews" class="section section-reviews reveal-on-scroll">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <p class="eyebrow">Отзывы</p>
+          <h2 class="section-title">Видеоистории родителей</h2>
+          <p class="section-subtitle">
+            Живые впечатления мам, пап и детей после занятий и спектаклей «Эмоции».
+          </p>
+          <div class="section-chips">
+            <span class="chip">Эмоции детей</span>
+            <span class="chip">Отзывы родителей</span>
+            <span class="chip">Видео 1–2 минуты</span>
+          </div>
+        </div>
+
+        <div class="reviews-strip-shell">
+          <button class="reviews-strip__arrow reviews-strip__arrow--left" type="button" aria-label="Предыдущий отзыв"
+            data-reviews-arrow="left">
+            ‹
+          </button>
+
+          <div class="reviews-strip" data-reviews-strip aria-label="Видеоистории родителей">
+            <!-- Карточки видеоотзывов рендерятся через JavaScript -->
+          </div>
+
+          <button class="reviews-strip__arrow reviews-strip__arrow--right" type="button" aria-label="Следующий отзыв"
+            data-reviews-arrow="right">
+            ›
+          </button>
+        </div>
+
+        <p class="reviews-hint">
+          Листайте ленту вправо, чтобы посмотреть другие истории.
+        </p>
+      </div>
+
+      <!-- Лайтбокс для просмотра выбранного видеоотзыва -->
+      <div class="review-lightbox" data-review-lightbox aria-hidden="true" hidden>
+        <div class="review-lightbox__backdrop" data-review-lightbox-backdrop></div>
+
+        <div class="review-lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="review-lightbox-title">
+          <button class="review-lightbox__close" type="button" aria-label="Закрыть отзыв" data-review-lightbox-close>
+            ✕
+          </button>
+
+          <div class="review-lightbox__video">
+            <!-- Видеоплеер подставляется через JavaScript -->
+          </div>
+
+          <div class="review-lightbox__body">
+            <h3 class="review-lightbox__title" id="review-lightbox-title"></h3>
+            <p class="review-lightbox__quote"></p>
+            <p class="review-lightbox__meta"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--
+    ========================================================================
+    Блок галереи
+    ========================================================================
+    -->
+    <section id="gallery" class="section section-gallery">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title section__title">Галерея</h2>
+          <p class="section-subtitle section__subtitle">
+            Несколько кадров с наших репетиций, спектаклей и закулисья.
+          </p>
+          <div class="section-chips">
+            <span class="chip chip--glass">Сцена</span>
+            <span class="chip chip--glass">Репетиции</span>
+            <span class="chip chip--glass">Закулисье</span>
+          </div>
+        </header>
+
+        <div class="gallery">
+          <div class="gallery__header">
+            <div class="gallery__tabs" aria-label="Фильтр фотографий">
+              <button class="gallery-tab is-active" type="button" data-gallery-filter="all">
+                Все
+              </button>
+              <button class="gallery-tab" type="button" data-gallery-filter="stage">
+                Сцена
+              </button>
+              <button class="gallery-tab" type="button" data-gallery-filter="rehearsal">
+                Репетиции
+              </button>
+              <button class="gallery-tab" type="button" data-gallery-filter="backstage">
+                Закулисье
+              </button>
+            </div>
+
+            <p class="gallery__hint">
+              Листайте ленту в сторону — как киноплёнку, там больше кадров.
+            </p>
+          </div>
+
+          <div class="gallery__scroller-wrapper">
+            <div class="gallery__scroller" data-gallery-scroller aria-label="Фотогалерея театра">
+              <!-- Карточки галереи рендерятся через JavaScript -->
+            </div>
+          </div>
+
+          <p class="gallery__video-note">
+            А ниже — короткие видео о спектаклях и жизни студии.
+          </p>
+
+          <div class="gallery__video" aria-label="Видео о театре «Эмоцика»">
+            <div class="gallery__video-item">
+              <iframe src="https://vk.com/video_ext.php?oid=-58293658&id=456241867"
+                title="Фильм «День матери» — Киношкола «Эмоция»" loading="lazy" allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="gallery__video-item gallery__video-item--cta">
+              <div class="gallery__video-card">
+                <p class="gallery__video-card-title">Больше видео во «ВКонтакте»</p>
+                <p class="gallery__video-card-text">
+                  Трейлеры спектаклей, фильмы КиноШколы «Эмоция» и короткие отзывы родителей — публикуем их в сообществе
+                  театра.
+                </p>
+                <a class="btn btn-secondary" href="https://vk.com/teatr.emocika" target="_blank" rel="noopener">
+                  Смотреть в VK Видео
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+    ========================================================================
+    Блок документов
+    ========================================================================
+    -->
+    <section id="docs" class="section section-docs section-card">
+      <div class="section-inner">
+        <div class="container">
+          <header class="section-header">
+            <h2 class="section-title">Документы</h2>
+            <p class="section-subtitle">
+              Все официальные бумаги театра «Эмоция» доступны для скачивания.
+            </p>
+            <div class="section-chips">
+              <span class="chip">Лицензия</span>
+              <span class="chip">Договор</span>
+              <span class="chip">PDF</span>
+            </div>
+          </header>
+
+          <div class="docs">
+            <ul class="docs-list">
+              <li class="docs-item">
+                <a href="assets/docs/license.pdf" class="docs-link" target="_blank" rel="noopener noreferrer">
+                  <span class="docs-title">
+                    Лицензия на образовательную деятельность
+                  </span>
+                  <span class="docs-meta">
+                    PDF, 2.3&nbsp;МБ
+                  </span>
+                </a>
+              </li>
+
+              <li class="docs-item">
+                <a href="assets/docs/contract-sample.pdf" class="docs-link" target="_blank" rel="noopener noreferrer">
+                  <span class="docs-title">
+                    Образец договора с родителями
+                  </span>
+                  <span class="docs-meta">
+                    PDF, 1.1&nbsp;МБ
+                  </span>
+                </a>
+              </li>
+            </ul>
+
+            <p class="docs-note">
+              Актуальные версии документов всегда лежат здесь. При изменениях мы обновляем файлы.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+    ========================================================================
+    Блок FAQ
+    ========================================================================
+    -->
+    <section id="faq" class="section section--faq section-card reveal-on-scroll">
+      <div class="section-inner">
+        <div class="container">
+          <header class="section-header">
+            <h2 class="section-title">Частые вопросы</h2>
+            <p class="section-subtitle">
+              Мы собрали ответы на самые частые вопросы родителей о занятиях, спектаклях и записи в студию.
+            </p>
+            <div class="section-chips">
+              <span class="chip">Возраст и группы</span>
+              <span class="chip">Расписание</span>
+              <span class="chip">Стоимость</span>
+            </div>
+          </header>
+
+          <div class="faq">
+            <div class="faq-search" data-faq-search>
+              <label class="faq-search__field">
+                <span>Найдите ответ</span>
+                <input type="search" placeholder="Например: оплата, возраст, расписание" data-faq-query />
+              </label>
+              <div class="faq-search__meta">
+                <span class="faq-search__hint">Мы будем подсвечивать подходящие вопросы по мере набора.</span>
+                <button type="button" class="btn btn-ghost btn-compact-mobile" data-faq-reset>Сбросить</button>
+                <span class="faq-search__count" data-faq-count aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                С какого возраста можно заниматься?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Мы принимаем детей с 3,5–4 лет. Есть группы раннего сценического развития, а также программы для
+                  школьников и подростков.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Нужно ли ребёнку опыт актёрской игры?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Нет, опыт не требуется. Большинство детей приходит «с нуля». Главное — интерес ребёнка, всё остальное
+                  мы даём на занятиях.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Как проходит первое занятие?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Первое занятие — пробное. Ребёнок знакомится с педагогом и группой, мы смотрим уровень внимания,
+                  темперамент и подбираем подходящую программу.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Как часто проходят занятия и спектакли?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Занятия проходят 1–2 раза в неделю. Отчётные спектакли — 2 раза в год. Театр «Эмоцика» также
+                  показывает премьерные спектакли ~раз в месяц, участвует в фестивалях и конкурсах.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Где проходят занятия?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>У нас 15 филиалов — студии расположены в разных районах Санкт-Петербурга. Главная сцена театра
+                  находится в ТРК «Гранд Каньон».</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Сколько стоит обучение?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Стоимость зависит от возраста и программы. Оплата помесячная. Точные условия администратор сообщит
+                  при записи.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Можно ли поступить в середине года?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Да, если в группе есть свободные места. Мы регулярно формируем новые составы и добор.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Как купить билеты на спектакль?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Билеты доступны на сайте театра по кнопке «Купить билет», на Яндекс.Афише и в кассе перед показом —
+                  если есть свободные места.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Снимаетесь ли вы кино? Можно ли ребёнку попасть в съёмки?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Да! Студия регулярно снимает короткометражные фильмы. Участники студии могут попасть в актёрский
+                  состав — кастинги проходят несколько раз в год.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Есть ли домашние задания?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Большинство заданий — творческие: выучить текст, потренировать дикцию, подготовить этюд. Мы не
+                  перегружаем детей академическими задачами.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Что нужно приносить с собой на занятия?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Удобную одежду, воду и хорошее настроение. Для некоторых занятий нужна сменная обувь.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Делаете ли вы фото/видео с занятий и спектаклей?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Да. Профессиональная съёмка ведётся на большинстве показов. Фото и видео мы публикуем в официальных
+                  соцсетях и отправляем родителям.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Что делать, если ребёнок стесняется?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Это нормально. Педагоги бережно вводят детей в занятия через игру и командные упражнения. Через 2–3
+                  недели дети раскрываются и чувствуют себя увереннее.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </section>
+
+    <!-- 
+    ========================================================================
+    Блок с филиалами
+    ========================================================================
+    -->
+    <section id="branches" class="section section-branches reveal-on-scroll">
+      <div class="container">
+        <div class="branches-top-layout">
+          <div class="branches-top-main">
+            <header class="branches-header">
+              <p class="section-kicker">Где проходят занятия</p>
+              <h2 class="section-title">Филиалы и площадки</h2>
+              <p class="section-intro">
+                Занятия студии «Эмоция» и театра «Эмоцика» проходят в разных районах
+                Петербурга и в Кудрово. Выберите удобную площадку и уточните расписание у администратора.
+              </p>
+              <div class="section-chips section-chips--left">
+                <span class="chip">15 филиалов</span>
+                <span class="chip">Метро рядом</span>
+                <span class="chip">Кудрово</span>
+              </div>
+            </header>
+
+            <div class="branches-preferences">
+              <label class="branches-my-metro">
+                <span class="branches-my-metro-label">Моя станция метро:</span>
+                <select class="branches-my-metro-select" name="my-metro" data-branch-my-metro>
+                  <option value="">Не выбрано</option>
+                  <!-- варианты метро будут добавлены через JS -->
+                </select>
+              </label>
+              <p class="branches-my-metro-hint">
+                Мы подсветим карточки с этой станцией метро.
+              </p>
+            </div>
+
+            <div class="branches-filters" aria-label="Фильтр по филиалам">
+              <button type="button" class="branches-filter is-active" data-branch-filter="all">
+                Все филиалы
+              </button>
+              <button type="button" class="branches-filter" data-branch-filter="adults">
+                Группы 18+
+              </button>
+            </div>
+          </div>
+
+          <figure class="branches-map">
+            <img src="assets/img/branches-map.svg"
+              alt="Карта с отмеченными районами, где проходят занятия студии «Эмоция»" class="branches-map-image" />
+            <figcaption class="branches-map-legend">
+              <p class="branches-map-legend-title">Районы, где идут занятия:</p>
+              <ul class="branches-area-list" data-branches-areas>
+                <!-- сюда JS подставит список районов -->
+              </ul>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="branches-list" data-branches-list></div>
+
+        <p class="branches-note">
+          Полный список филиалов и набор в группы уточняйте у администратора —
+          расписание может меняться в течение года.
+          <a href="about.html#contacts" class="branches-note-link">
+            Перейти к контактам администратора →
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 
+    ========================================================================
+    Блок контактов
+    ========================================================================
+    -->
+
+    <section id="contacts" class="section section--contacts section-card">
+      <div class="section-inner">
+        <div class="container contacts">
+          <div class="contacts__info card-luxe">
+            <header class="section-header section-header--left">
+              <h2 class="section-title">Контакты</h2>
+              <p class="contacts__text section-subtitle">Записаться на пробное занятие, уточнить расписание или задать
+                любой вопрос можно у администратора театра и студии.</p>
+              <div class="section-chips section-chips--left">
+                <span class="chip">Звонки и WhatsApp</span>
+                <span class="chip">11:00–20:00</span>
+                <span class="chip">ТРК «Гранд Каньон»</span>
+              </div>
+            </header>
+            <dl class="contacts__list">
+              <div class="contacts__row">
+                <dt>Телефон:</dt>
+                <dd>
+                  <a href="tel:+79313157787">+7 (931) 315-77-87</a>
+                  <span class="contacts__note">— звонки и WhatsApp</span>
+                </dd>
+              </div>
+              <div class="contacts__row">
+                <dt>Email:</dt>
+                <dd><a href="mailto:info@emozia.ru">info@emozia.ru</a></dd>
+              </div>
+              <div class="contacts__row">
+                <dt>Адрес сцены:</dt>
+                <dd>Санкт-Петербург, проспект Энгельса, 154, ТРК «Гранд Каньон», 3-й этаж</dd>
+              </div>
+            </dl>
+            <p class="contacts__note">Занятия студии проходят в нескольких филиалах Санкт-Петербурга — подберём удобную
+              площадку и время для вашей семьи.</p>
+            <p class="contacts__time">Мы на связи ежедневно с 11:00 до 20:00.</p>
+            <p class="contacts__note">В рабочие часы быстрее отвечаем в WhatsApp.</p>
+            <div class="contacts__actions">
+              <a href="https://wa.me/79313157787" class="btn btn-primary" target="_blank" rel="noopener">
+                <img src="assets/img/ui/whatsapp-icon.svg" alt="" class="icon" />
+                Написать в WhatsApp
+              </a>
+              <a href="https://vk.com/teatr.emocika" class="btn btn-outline" target="_blank" rel="noopener">Мы
+                во ВКонтакте</a>
+            </div>
+          </div>
+          <div class="contacts__map card-luxe">
+            <iframe
+              src="https://yandex.ru/map-widget/v1/?ll=30.333187%2C60.059865&z=17&l=map&pt=30.333187,60.059865,pm2rdm"
+              loading="lazy" title="Карта проезда в театр «Эмоцика»" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" data-scroll-to="hero">
+            <img class="footer__mark" src="assets/img/ui/favicon.png" alt="Логотип театра «Эмоцика»" />
+            <span class="footer__name">Театр «Эмоцика»</span>
+          </a>
+          <p class="footer__copy">© 2014–2025, театр «Эмоцика» и студия «Эмоция». Все права защищены.</p>
+        </div>
+        <nav class="footer__nav" aria-label="Навигация по сайту">
+          <a href="afisha.html" class="footer__link" data-scroll-to="afisha">Афиша</a>
+          <a href="afisha.html#snow-queen" class="footer__link" data-scroll-to="snow-queen">Новый год</a>
+          <a href="about.html#people" class="footer__link" data-scroll-to="people">Люди театра</a>
+          <a href="about.html#awards" class="footer__link" data-scroll-to="awards">Награды</a>
+          <a href="about.html#docs" class="footer__link" data-scroll-to="docs">Документы</a>
+          <a href="about.html#contacts" class="footer__link" data-scroll-to="contacts">Контакты</a>
+        </nav>
+        <div class="footer__meta">
+          <p class="footer__license">Лицензия на образовательную деятельность № 03-21-6065/24-0-3 от 05.11.2024, рег.
+            № 1035-01271-78/01491532, ИП Бурундукова Е. А.</p>
+          <a href="about.html#docs" class="footer__link footer__link--small" data-scroll-to="docs">Политика
+            конфиденциальности</a>
+          <p class="footer__dev">Сайт разработал <a href="https://telegram.me/BurundukovS" target="_blank"
+              rel="noopener" class="footer__link footer__link--small">BurundukovS</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- Модальное окно спектакля -->
+  <div class="play-modal" data-play-modal hidden>
+    <div class="play-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="play-modal-title">
+      <button type="button" class="play-modal__close" data-play-modal-close
+        aria-label="Закрыть окно о спектакле">×</button>
+      <div class="play-modal__header">
+        <span class="play-modal__badge badge badge--brand" data-play-badge></span>
+        <h2 class="play-modal__title" id="play-modal-title" data-play-title></h2>
+        <p class="play-modal__meta" data-play-meta></p>
+      </div>
+      <div class="play-modal__body">
+        <div class="play-modal__text">
+          <p class="play-modal__tagline" data-play-tagline></p>
+          <div class="play-modal__description" data-play-description></div>
+          <div class="play-modal__why" data-play-why-container>
+            <h3 class="play-modal__subheading">Почему стоит посмотреть</h3>
+            <ul class="play-modal__why-list" data-play-why></ul>
+          </div>
+          <div class="play-modal__credits">
+            <p class="play-modal__credit" data-play-author></p>
+            <p class="play-modal__credit" data-play-director></p>
+            <div class="play-modal__cast" data-play-cast-container>
+              <h3 class="play-modal__subheading" data-play-cast-title></h3>
+              <ul class="play-modal__cast-list" data-play-cast></ul>
+            </div>
+          </div>
+        </div>
+        <div class="play-modal__media">
+          <div class="play-modal__video" data-play-video></div>
+          <div class="play-modal__photos" data-play-photos></div>
+        </div>
+      </div>
+      <div class="play-modal__footer">
+        <a href="https://clck.ru/3QWtC2" target="_blank" rel="noopener" class="btn btn-primary" data-play-ticket>Купить
+          билет</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="lightbox" id="gallery-lightbox" hidden>
+    <button class="lightbox__overlay" type="button" data-lightbox-close></button>
+
+    <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+      <!-- Кнопка закрытия модального окна галереи -->
+      <button class="lightbox__close" type="button" data-lightbox-close aria-label="Закрыть галерею">
+        ×
+      </button>
+
+      <figure class="lightbox__figure">
+        <img src="" alt="" class="lightbox__image">
+        <figcaption class="lightbox__caption"></figcaption>
+      </figure>
+
+      <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev
+        aria-label="Предыдущая фотография">
+        ‹
+      </button>
+      <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next
+        aria-label="Следующая фотография">
+        ›
+      </button>
+    </div>
+  </div>
+
+  <div class="cta-dock cta-dock--hidden" aria-label="Быстрые действия">
+    <a href="https://clck.ru/3QWtC2" target="_blank" rel="noopener" class="cta-dock__btn cta-dock__btn--primary">
+      Купить билет
+    </a>
+    <a href="https://wa.me/79313157787" target="_blank" rel="noopener" class="cta-dock__btn cta-dock__btn--ghost">
+      Написать в WhatsApp
+    </a>
+  </div>
+
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+
+</html>

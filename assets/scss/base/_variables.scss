@@ -73,4 +73,14 @@
     --motion-ease-soft: cubic-bezier(0.19, 0.72, 0.26, 0.99);
     --motion-snow: 26s;
     /* медленная плавная анимация снега */
+
+    /* 9. Premium Effects (Glass, Shadows) */
+    --shadow-luxe: 0 10px 40px rgba(8, 2, 26, 0.08), 0 4px 12px rgba(8, 2, 26, 0.05);
+    --shadow-float: 0 20px 50px rgba(74, 23, 123, 0.15), 0 10px 20px rgba(74, 23, 123, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-blur: blur(16px);
+
+    --gradient-hero: radial-gradient(circle at top left, #531a88 0%, #2b0c4e 50%, #0d0418 100%);
+    --gradient-glow: radial-gradient(circle, rgba(255, 209, 220, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
 }

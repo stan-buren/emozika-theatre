@@ -21,8 +21,8 @@
 /* Luxe card – общий стиль премиальных карточек */
 .card-luxe {
     border-radius: 24px;
-    background: linear-gradient(145deg, #ffffff, #f6f0ff);
-    box-shadow: 0 20px 60px rgba(8, 2, 26, 0.12);
+    background: linear-gradient(145deg, #ffffff, #f9f6fc);
+    box-shadow: var(--shadow-luxe);
     border: 1px solid rgba(122, 47, 180, 0.1);
     padding: 22px 20px;
     transition:
@@ -49,6 +49,6 @@
 .abonement-card:hover,
 .films-card:hover,
 .gallery-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 45px rgba(8, 2, 26, 0.28);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-float);
 }

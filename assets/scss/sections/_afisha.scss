@@ -47,15 +47,19 @@
 
 .afisha-card--strip {
     flex: 0 0 auto;
-    min-width: 360px;
-    max-width: 400px;
-    scroll-snap-align: start;
+    min-width: 340px;
+    max-width: 360px;
+    scroll-snap-align: center;
+    /* Center snap for engagement */
+    padding-bottom: 20px;
+    /* Space for shadow */
 }
 
 @media (max-width: 640px) {
     .afisha-card--strip {
-        min-width: 82vw;
-        max-width: 82vw;
+        min-width: 85vw;
+        max-width: 85vw;
+        scroll-snap-align: center;
     }
 }
 
@@ -141,11 +145,21 @@
     background: rgba(122, 47, 180, 0.06);
 }
 
+.afisha-card[data-play-trigger] {
+    cursor: pointer;
+}
+
+.afisha-card:hover .afisha-title {
+    color: var(--color-brand);
+}
+
 .afisha-buttons--strip {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    /* Одна кнопка на всю ширину */
     gap: 8px;
-    margin-top: 8px;
+    margin-top: 14px;
+    /* Чуть больше воздуха */
 }
 
 @media (max-width: 640px) {
