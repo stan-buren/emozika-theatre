@@ -1,0 +1,33 @@
+---
+interface Props {
+  reviews: any[];
+}
+
+const { reviews } = Astro.props;
+---
+
+<div class="reviews-strip" data-reviews-strip aria-label="Видеоистории родителей">
+    {reviews.filter(r => r.isActive).map(review => (
+      <article 
+        class={`review-video-card card card-hover ${!review.videoEmbedUrl ? 'review-video-card--text' : ''}`} 
+        data-review-id={review.id}
+        data-video-url={review.videoEmbedUrl}
+        data-quote={review.quote}
+      >
+        <div class={`review-video-card__poster ${!review.thumbUrl ? 'review-video-card__poster--empty' : ''}`} style={review.thumbUrl ? `background-image: url(${review.thumbUrl})` : ''}>
+          {review.durationLabel && <span class="review-video-card__duration">{review.durationLabel}</span>}
+        </div>
+        <span class={`review-video-card__badge ${!review.videoEmbedUrl ? 'review-video-card__badge--text' : ''}`}>
+          {review.videoEmbedUrl ? 'Видеоотзыв' : 'История'}
+        </span>
+        <h3 class="review-video-card__title">{review.title}</h3>
+        <p class="review-video-card__meta">
+          {[
+            review.authorLabel, 
+            review.yearsInStudioLabel, 
+            review.branch
+          ].filter(Boolean).join(' • ')}
+        </p>
+      </article>
+    ))}
+</div>

@@ -1,0 +1,56 @@
+[
+    {
+        "id": "stage-love-tank",
+        "category": "stage",
+        "categoryLabel": "Сцена",
+        "src": "/assets/img/posters/love-tank-hero.webp",
+        "full": "/assets/img/posters/love-tank-hero.webp",
+        "alt": "Постер спектакля «Любовь у сливного бачка»",
+        "caption": "Премьера «Любовь у сливного бачка» в камерном зале"
+    },
+    {
+        "id": "stage-snow-queen",
+        "category": "stage",
+        "categoryLabel": "Сцена",
+        "src": "/assets/img/posters/snow-queen.webp",
+        "full": "/assets/img/posters/snow-queen.webp",
+        "alt": "Постер новогоднего квест-спектакля «Снежная королева»",
+        "caption": "Новогодний квест-спектакль «Снежная Королева»"
+    },
+    {
+        "id": "rehearsal-elena",
+        "category": "rehearsal",
+        "categoryLabel": "Репетиции",
+        "src": "/assets/img/people/elena-molodan.jpg",
+        "full": "/assets/img/people/elena-molodan.jpg",
+        "alt": "Педагог Елена Молудан на репетиции",
+        "caption": "Рабочий момент с педагогом Еленой Молудан"
+    },
+    {
+        "id": "rehearsal-maria",
+        "category": "rehearsal",
+        "categoryLabel": "Репетиции",
+        "src": "/assets/img/people/maria-suvorova.jpg",
+        "full": "/assets/img/people/maria-suvorova.jpg",
+        "alt": "Юная актриса Мария Суворова готовит роль",
+        "caption": "Работа над ролью: Мария Суворова"
+    },
+    {
+        "id": "backstage-evgeny",
+        "category": "backstage",
+        "categoryLabel": "Закулисье",
+        "src": "/assets/img/people/evgeny-baranov.jpg",
+        "full": "/assets/img/people/evgeny-baranov.jpg",
+        "alt": "Закулисье съёмочного дня с Евгением Барановым",
+        "caption": "Закулисье съёмочного дня"
+    },
+    {
+        "id": "stage-snow-hall",
+        "category": "stage",
+        "categoryLabel": "Сцена",
+        "src": "/assets/img/posters/snow-queen-horizontal.webp",
+        "full": "/assets/img/posters/snow-queen-horizontal.webp",
+        "alt": "Камерный зал к новогодней программе «Снежная королева»",
+        "caption": "Камерный зал перед новогодним показом"
+    }
+]

@@ -1,0 +1,669 @@
+/* ===========================
+   3.2. Afisha (#afisha)
+   =========================== */
+
+.section-afisha {
+    background: var(--color-bg-paper);
+}
+
+.section-afisha .section-title {
+    color: var(--color-brand-dark);
+}
+
+.section-afisha .section-subtitle {
+    max-width: 620px;
+    margin: 0 auto 32px;
+    color: var(--color-text-muted);
+}
+
+.afisha-strip-wrapper {
+    position: relative;
+    margin-top: 24px;
+    padding: 0 40px;
+}
+
+.afisha-strip {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 0 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.afisha-strip::-webkit-scrollbar {
+    height: 6px;
+}
+
+.afisha-strip::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.afisha-strip::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 999px;
+}
+
+.afisha-card--strip {
+    flex: 0 0 auto;
+    min-width: 340px;
+    max-width: 360px;
+    scroll-snap-align: center;
+    /* Center snap for engagement */
+    padding-bottom: 20px;
+    /* Space for shadow */
+}
+
+@media (max-width: 640px) {
+    .afisha-card--strip {
+        min-width: 85vw;
+        max-width: 85vw;
+        scroll-snap-align: center;
+    }
+}
+
+.afisha-card-poster-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0b0617;
+    aspect-ratio: 2 / 3;
+    min-height: 260px;
+}
+
+.afisha-card-poster-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: #0b0617;
+    transition: transform 0.18s ease-out;
+}
+
+.afisha-card-poster-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    color: #f5edff;
+    background:
+        linear-gradient(135deg, rgba(122, 47, 180, 0.7), rgba(255, 159, 87, 0.6)),
+        #0b0617;
+}
+
+.afisha-card--strip:hover .afisha-card-poster-image {
+    transform: scale(1.03);
+}
+
+.afisha-card-badge-wrap {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.afisha-card-badge--premiere {
+    background: linear-gradient(135deg, #ffcf33, #ff7a00);
+}
+
+.afisha-card-badge--ny {
+    background: linear-gradient(135deg, #89c4ff, #4a1fb8);
+}
+
+.afisha-card-footer {
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.afisha-card-subline {
+    margin: 0;
+    font-size: 13px;
+    color: var(--color-text-muted, #666);
+}
+
+.afisha-card--strip .afisha-title {
+    margin: 0;
+    font-size: 16px;
+}
+
+.afisha-card-note {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--color-text-muted, #666);
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: rgba(122, 47, 180, 0.06);
+}
+
+.afisha-card[data-play-trigger] {
+    cursor: pointer;
+}
+
+.afisha-card:hover .afisha-title {
+    color: var(--color-brand);
+}
+
+.afisha-buttons--strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Одна кнопка на всю ширину */
+    gap: 8px;
+    margin-top: 14px;
+    /* Чуть больше воздуха */
+}
+
+@media (max-width: 640px) {
+    .afisha-buttons--strip {
+        grid-template-columns: 1fr;
+    }
+}
+
+.afisha-strip-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.26), transparent 60%),
+        linear-gradient(135deg, rgba(9, 16, 40, 0.96), rgba(42, 16, 99, 0.9));
+    color: #ffffff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(8, 2, 26, 0.6);
+    transition:
+        transform var(--motion-fast) var(--motion-ease-soft),
+        box-shadow var(--motion-fast) var(--motion-ease-soft),
+        background-color var(--motion-fast) var(--motion-ease-soft),
+        border-color var(--motion-fast) var(--motion-ease-soft);
+}
+
+.afisha-strip-arrow--prev {
+    left: -18px;
+}
+
+.afisha-strip-arrow--next {
+    right: -18px;
+}
+
+.afisha-strip-arrow:hover,
+.afisha-strip-arrow:focus-visible {
+    transform: translateY(-50%) translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 14px 32px rgba(8, 2, 26, 0.75);
+    outline: none;
+}
+
+@media (min-width: 768px) {
+    .afisha-strip-arrow {
+        display: inline-flex;
+    }
+}
+
+.afisha-card--empty {
+    min-width: min(540px, 100%);
+}
+
+.afisha-card-empty-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.afisha-empty-title {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-brand-dark);
+}
+
+.afisha-empty-text {
+    margin: 0;
+    color: var(--color-text-muted);
+}
+
+.afisha-empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (max-width: 640px) {
+    .afisha-card--empty {
+        min-width: 100%;
+    }
+
+    .afisha-empty-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-afisha {
+        padding: 52px 0;
+    }
+
+    .afisha-strip-wrapper {
+        padding: 0 12px;
+        position: relative;
+    }
+
+    .afisha-strip {
+        gap: 16px;
+        padding: 2px 4px 10px;
+    }
+
+    .afisha-strip-wrapper::after {
+        content: "Свайпните афишу →";
+        position: absolute;
+        right: 12px;
+        bottom: -12px;
+        font-size: 12px;
+        color: var(--color-text-muted);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 4px 10px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        pointer-events: none;
+    }
+}
+
+
+/* ================================
+    3.2.2 Модальное окно спектакля
+   ================================ */
+
+.play-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(5, 2, 20, 0.75);
+    z-index: 2000;
+}
+
+.play-modal[hidden] {
+    display: none;
+}
+
+.play-modal__dialog {
+    position: relative;
+    max-width: 960px;
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    padding: 24px 24px 20px;
+}
+
+.play-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.play-modal__header {
+    margin-bottom: 16px;
+}
+
+.play-modal__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #f2ecff;
+    color: #4a1fb8;
+    margin-bottom: 8px;
+}
+
+.play-modal__badge.is-hidden {
+    display: none;
+}
+
+.play-modal__title {
+    margin: 0 0 6px;
+    font-size: 24px;
+}
+
+.play-modal__meta {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-text-muted, #666);
+}
+
+.play-modal__meta.is-hidden {
+    display: none;
+}
+
+.play-modal__tagline {
+    font-weight: 500;
+    margin: 12px 0 10px;
+}
+
+.play-modal__body {
+    display: grid;
+    gap: 18px;
+}
+
+@media (min-width: 768px) {
+    .play-modal__body {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+        align-items: flex-start;
+    }
+}
+
+.play-modal__description p {
+    margin: 0 0 10px;
+}
+
+.play-modal__why-list {
+    padding-left: 18px;
+    margin: 6px 0 0;
+}
+
+.play-modal__why.is-hidden {
+    display: none;
+}
+
+.play-modal__credits p {
+    margin: 0 0 6px;
+    font-size: 14px;
+}
+
+.play-modal__cast-list {
+    padding-left: 18px;
+    margin: 4px 0 0;
+}
+
+.play-modal__cast.is-hidden {
+    display: none;
+}
+
+.play-modal__media {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.play-modal-photo {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+}
+
+.play-modal-photo-placeholder {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px dashed rgba(122, 47, 180, 0.3);
+    background: rgba(122, 47, 180, 0.06);
+    color: var(--color-text-muted);
+    font-size: 14px;
+}
+
+.play-modal__footer {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.play-modal__footer .btn {
+    min-width: 180px;
+}
+
+/* Утилита для скрытия элементов */
+.is-hidden {
+    display: none !important;
+}
+
+/* Блокируем скролл страницы при открытой модалке */
+body.has-modal-open {
+    overflow: hidden;
+}
+
+
+/* ================================
+   3.2.3 Стили афиши в стиле Emozika
+   ================================ */
+
+/* Карточка спектакля: плавный hover и объём */
+.afisha-card {
+    background: var(--color-bg-paper);
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.08);
+    transition:
+        transform var(--motion-normal) var(--motion-ease-soft),
+        box-shadow var(--motion-normal) var(--motion-ease-soft),
+        border-color var(--motion-fast) var(--motion-ease-soft),
+        background-color var(--motion-fast) var(--motion-ease-soft);
+}
+
+.afisha-card-main {
+    border: 1px solid rgba(122, 47, 180, 0.16);
+}
+
+.afisha-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px rgba(8, 2, 26, 0.18);
+}
+
+/* Постер: лёгкий подъём и glow при наведении */
+.afisha-poster {
+    position: relative;
+    min-height: 180px;
+    border-radius: 24px 24px 0 0;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    background: radial-gradient(circle at top left, var(--color-brand-dark), var(--color-brand));
+}
+
+.afisha-card:hover .afisha-poster {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.55),
+        0 18px 40px rgba(8, 2, 26, 0.35);
+}
+
+/* Glass-бейдж на постере */
+.afisha-poster-label {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.afisha-card:hover .afisha-poster-label {
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+}
+
+/* Мета-строка как афиша сеанса */
+.afisha-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.afisha-meta-row span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.afisha-meta-row span:not(:last-child)::after {
+    content: "•";
+    margin-left: 8px;
+    margin-right: 8px;
+    opacity: 0.55;
+}
+
+/* возрастной рейтинг как чип */
+.afisha-age {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(122, 47, 180, 0.08);
+    color: var(--color-brand-dark);
+    font-weight: 600;
+}
+
+/* Афиша как маленькая сцена: подиум и свет */
+
+.section-afisha .afisha-card {
+    position: relative;
+    /* опорная точка для псевдоэлементов */
+    overflow: visible;
+    /* даём подиуму выходить за границы */
+    z-index: 0;
+    transform-origin: center bottom;
+    transition:
+        transform 0.28s ease-out,
+        box-shadow 0.28s ease-out;
+}
+
+/* лёгкий выезд карточки вперёд при наведении и фокусе клавиатурой */
+.section-afisha .afisha-card:hover,
+.section-afisha .afisha-card:focus-within {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: 0 24px 60px rgba(8, 2, 26, 0.28);
+}
+
+/* подиум под карточкой (подсвеченная сцена) */
+.section-afisha .afisha-card::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -18px;
+    transform: translateX(-50%) scaleX(0.8);
+    width: 70%;
+    height: 26px;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 0, 0, 0.22) 0%,
+            rgba(0, 0, 0, 0.1) 40%,
+            rgba(0, 0, 0, 0) 75%);
+    opacity: 0;
+    filter: blur(6px);
+    transition:
+        opacity 0.35s ease-out,
+        transform 0.35s ease-out,
+        filter 0.35s ease-out;
+    z-index: -1;
+    /* слой под карточкой */
+}
+
+/* при наведении подиум расширяется и усиливается */
+.section-afisha .afisha-card:hover::before,
+.section-afisha .afisha-card:focus-within::before {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1.08);
+    filter: blur(10px);
+}
+
+/* мягкий луч софитов сверху */
+.section-afisha .afisha-card::after {
+    content: "";
+    position: absolute;
+    inset: -28px 6% auto;
+    height: 40%;
+    border-radius: 28px;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 255, 255, 0) 60%);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+        opacity 0.35s ease-out,
+        transform 0.35s ease-out;
+    z-index: -1;
+}
+
+/* при наведении луч проявляется */
+.section-afisha .afisha-card:hover::after,
+.section-afisha .afisha-card:focus-within::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* уважение системной настройки prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .section-afisha .afisha-card,
+    .section-afisha .afisha-card::before,
+    .section-afisha .afisha-card::after {
+        transition: none;
+    }
+
+    .section-afisha .afisha-card:hover,
+    .section-afisha .afisha-card:focus-within {
+        transform: none;
+        box-shadow: 0 16px 40px rgba(8, 2, 26, 0.12);
+    }
+
+    .section-afisha .afisha-card:hover::before,
+    .section-afisha .afisha-card:focus-within::before,
+    .section-afisha .afisha-card:hover::after,
+    .section-afisha .afisha-card:focus-within::after {
+        opacity: 0;
+    }
+}
+
+.afisha-note {
+    color: var(--color-text-muted);
+}
+
+/* Афиша: делаем два главных спектакля равными по размеру */
+.section-afisha .afisha-grid {
+    /* чуть крупнее карточки, аккуратная сетка */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.section-afisha .afisha-card-main {
+    /* убираем растяжение на две колонки — все главные карточки одинаковой ширины */
+    grid-column: auto;
+}
+
+@media (min-width: 900px) {
+
+    /* тизерная карточка — отдельной строкой по центру */
+    .section-afisha .afisha-card-teaser {
+        grid-column: 1 / -1;
+        max-width: 640px;
+        margin-inline: auto;
+    }
+}

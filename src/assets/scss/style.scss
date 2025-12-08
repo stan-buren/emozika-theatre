@@ -1,0 +1,33 @@
+// Base styles
+@use "base/variables";
+@use "base/reset";
+@use "base/typography";
+@use "base/layout";
+
+// Components
+@use "components/buttons";
+@use "components/badges";
+@use "components/cards";
+@use "components/lightbox";
+
+// Sections
+@use "sections/header";
+@use "sections/hero";
+@use "sections/tracks";
+@use "sections/abonements";
+@use "sections/afisha";
+@use "sections/snow-queen";
+@use "sections/studio";
+@use "sections/films";
+@use "sections/casting";
+@use "sections/people";
+@use "sections/awards";
+@use "sections/reviews";
+@use "sections/gallery";
+@use "sections/faq";
+@use "sections/branches";
+@use "sections/contacts";
+@use "sections/footer";
+
+// Pages
+@use "pages/error";

@@ -1,0 +1,132 @@
+/* ===========================
+    4.10. FAQ (#faq)
+   =========================== */
+
+.section--faq {
+    background: #f9f4ff;
+}
+
+.section--faq .section-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section--faq .section-inner {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.faq-search {
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    box-shadow: 0 10px 26px rgba(24, 1, 54, 0.06);
+    display: grid;
+    gap: 10px;
+}
+
+.faq-search__field {
+    display: grid;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--color-text);
+}
+
+.faq-search__field span {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.faq-search__field input {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(122, 47, 180, 0.25);
+    font: inherit;
+}
+
+.faq-search__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.faq-search__count {
+    font-weight: 700;
+    color: var(--color-brand-dark);
+}
+
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faq-item {
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid rgba(122, 47, 180, 0.10);
+    box-shadow: 0 12px 32px rgba(24, 1, 54, 0.06);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.faq-question:hover,
+.faq-question:focus-visible {
+    background: rgba(122, 47, 180, 0.04);
+}
+
+.faq-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(122, 47, 180, 0.45);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 150ms ease-out, background 150ms ease-out, color 150ms ease-out;
+}
+
+/* При раскрытии плюс превращаем в крестик лёгким поворотом */
+.faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+    background: #4a1fb8;
+    color: #fff;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 16px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-text-muted, #666);
+}
+
+.faq-item.is-open .faq-answer {
+    display: block;
+}
+
+.faq-answer p:last-child {
+    margin-bottom: 0;
+}

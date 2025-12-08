@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-labelledby="title desc">
+  <title id="title">Карта филиалов студии «Эмоция»</title>
+  <desc id="desc">Стилизованная карта с отмеченными районами присутствия студии и театра.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe9ff" />
+      <stop offset="60%" stop-color="#fff6ff" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="outline" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7a2fb4" />
+      <stop offset="100%" stop-color="#ff6ac1" />
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="800" height="520" fill="url(#bg)" rx="28" />
+
+  <path
+    d="M252 104c42-34 108-43 164-34 73 12 141 46 193 95 46 44 79 100 76 152-3 56-47 109-108 128-67 21-152 6-219-23-71-31-122-78-166-126-31-33-61-74-62-115-2-43 29-78 73-77 19 0 35 6 49 13z"
+    fill="#f7edff"
+    stroke="url(#outline)"
+    stroke-width="4"
+    opacity="0.9"
+  />
+
+  <g fill="#ffffff" stroke="url(#outline)" stroke-width="3" opacity="0.9">
+    <path d="M189 186c28-24 66-33 97-19 36 16 61 56 63 99 1 31-13 67-42 80-35 15-79-4-108-31-32-30-54-73-41-104 6-14 17-23 31-25z" />
+    <path d="M470 176c36-10 77-5 104 19 31 28 37 78 16 115-18 32-56 55-92 55-34 0-69-21-88-51-22-35-22-82 7-109 14-14 33-24 53-29z" />
+  </g>
+
+  <g fill="#7a2fb4" opacity="0.16">
+    <circle cx="300" cy="180" r="90" />
+    <circle cx="520" cy="240" r="110" />
+    <circle cx="400" cy="320" r="130" />
+  </g>
+
+  <g fill="#7a2fb4" stroke="#ffffff" stroke-width="6">
+    <circle cx="310" cy="150" r="10" />
+    <circle cx="365" cy="205" r="10" />
+    <circle cx="435" cy="180" r="10" />
+    <circle cx="505" cy="210" r="10" />
+    <circle cx="540" cy="270" r="10" />
+    <circle cx="490" cy="315" r="10" />
+    <circle cx="420" cy="330" r="10" />
+    <circle cx="360" cy="300" r="10" />
+    <circle cx="295" cy="260" r="10" />
+    <circle cx="250" cy="310" r="10" />
+  </g>
+</svg>

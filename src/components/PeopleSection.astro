@@ -1,0 +1,68 @@
+---
+import peopleData from '../data/people.json';
+
+const { class: className } = Astro.props;
+---
+
+<section id="people" class={`section section-people section-card reveal-on-scroll ${className || ''}`}>
+  <div class="section-inner">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-title section-title--handdrawn">Люди театра</h2>
+        <p class="section-subtitle">За спектаклями и занятиями в «Эмоцике» стоят режиссёры, педагоги, актёры и юные
+          артисты студии. Здесь только часть нашей команды и звёзд студии.</p>
+        <div class="section-chips">
+          <span class="chip">Режиссёры</span>
+          <span class="chip">Педагоги</span>
+          <span class="chip">Юные артисты</span>
+        </div>
+      </header>
+      <div class="people-shell">
+        
+        <!-- People Filter -->
+        <div class="people-filter" data-people-filter>
+            {(peopleData.groups || []).map((group, index) => (
+            <button 
+                class={`people-filter__btn ${index === 0 ? 'is-active' : ''}`} 
+                type="button" 
+                data-group={group.id}
+            >
+                {group.title}
+            </button>
+            ))}
+        </div>
+
+        <!-- People Grid -->
+        <div class="people-grid" data-people-grid>
+            {(peopleData.groups || []).map((group, groupIndex) => 
+            (group.items || []).map((person, itemIndex) => (
+                <article 
+                class={`people-card ${groupIndex !== 0 ? 'hidden-group' : ''} ${itemIndex >= 8 ? 'hidden-item' : ''}`}
+                data-group={group.id}
+                data-role={person.role}
+                style={groupIndex !== 0 || itemIndex >= 8 ? 'display: none;' : ''}
+                >
+                <div class="people-card__image-wrapper">
+                    {person.photoUrl 
+                    ? <img src={person.photoUrl} alt={person.name} class="people-card__image" loading="lazy" />
+                    : <div class="people-card__placeholder">{person.name[0]}</div>
+                    }
+                </div>
+                <h3 class="people-card__name">{person.name}</h3>
+                <p class="people-card__role">{person.role}</p>
+                {person.bio && <p class="people-card__bio">{person.bio}</p>}
+                </article>
+            ))
+            )}
+        </div>
+
+        <div class="people-actions">
+            <button class="btn btn--outline" type="button" data-people-load-more>
+            Показать ещё
+            </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

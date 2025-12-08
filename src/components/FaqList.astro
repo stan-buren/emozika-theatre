@@ -1,0 +1,23 @@
+---
+interface Props {
+  faqItems: any[];
+}
+
+const { faqItems } = Astro.props;
+---
+
+<div class="faq-list" data-faq-list>
+    {faqItems.map((item, index) => (
+        <article class="faq-item" data-faq-item>
+            <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls={`faq-answer-${index}`}>
+                <span class="faq-item__question">{item.question}</span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content" id={`faq-answer-${index}`} hidden>
+                <div class="faq-item__body">
+                    <p>{item.answer}</p>
+                </div>
+            </div>
+        </article>
+    ))}
+</div>

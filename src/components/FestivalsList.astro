@@ -1,0 +1,48 @@
+---
+interface Props {
+  festivals: any[];
+}
+
+const { festivals } = Astro.props;
+---
+
+<div class="festivals-list" data-festivals-root>
+    {festivals.map((festival, index) => {
+        const years = festival.years || [];
+        const yearsText = years.join(", ");
+        
+        let metaText = [...years].sort((a,b)=>b-a).join(", ");
+        if (festival.city) metaText += ` • ${festival.city}`;
+
+        return (
+            <article class={`festival-card ${index >= 5 ? 'hidden-festival' : ''}`} data-festival-id={festival.id} style={index >= 5 ? 'display: none;' : ''}>
+                <header>
+                    <h3 class="festival-card-title">{festival.title}</h3>
+                    <p class="festival-card-meta">{metaText}</p>
+                </header>
+                
+                <p class="festival-card-headline">{festival.headline}</p>
+                
+                <ul class="festival-card-list">
+                    {(festival.entries || []).slice(0, 4).map(festEntry => {
+                        const parts = [festEntry.status, festEntry.work, festEntry.category, festEntry.note].filter(Boolean);
+                        return <li>{parts.join(" — ")}</li>;
+                    })}
+                </ul>
+                
+                <div class="festival-tags">
+                    {festival.directions && festival.directions.map(dir => {
+                        if (dir === 'theatre') return <span class="festival-tag festival-tag--theatre">Театр</span>;
+                        if (dir === 'film') return <span class="festival-tag festival-tag--film">Кино</span>;
+                        if (dir === 'speech') return <span class="festival-tag festival-tag--speech">Художественное слово</span>;
+                        return null;
+                    })}
+                </div>
+            </article>
+        );
+    })}
+</div>
+
+<button type="button" class="people-toggle awards-toggle" style={festivals.length <= 5 ? 'display: none;' : ''}>
+    Показать ещё фестивали ({Math.max(0, festivals.length - 5)})
+</button>

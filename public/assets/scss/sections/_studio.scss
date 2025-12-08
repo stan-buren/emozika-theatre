@@ -1,0 +1,1273 @@
+/* ===========================
+    4.3. Studio (#studio)
+   =========================== */
+
+#studio.section-studio {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-bg-warm);
+}
+
+#studio.section-studio::before,
+#studio.section-studio::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+#studio.section-studio::before {
+    top: 0;
+    background: linear-gradient(to bottom,
+            rgba(17, 11, 40, 0.2),
+            rgba(17, 11, 40, 0));
+}
+
+#studio.section-studio::after {
+    bottom: 0;
+    background: radial-gradient(circle at 50% 120%,
+            rgba(17, 11, 40, 0.18),
+            rgba(17, 11, 40, 0) 70%);
+}
+
+.section-studio {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.section-studio h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+/* Факты в хедере блока "О театре и студии" */
+.section-studio .about-facts {
+    max-width: 840px;
+    margin: 16px 0 32px;
+}
+
+.section-studio .about-facts-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.section-studio .about-fact {
+    font-size: 13px;
+}
+
+.section-studio .studio-subnav {
+    margin: 10px 0 14px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.section-studio .studio-subnav button {
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+    background: rgba(122, 47, 180, 0.06);
+    color: var(--color-brand-dark, #2a103f);
+    cursor: pointer;
+    transition:
+        background 0.18s ease-out,
+        transform 0.18s ease-out;
+}
+
+.section-studio .studio-subnav button:hover,
+.section-studio .studio-subnav button:focus-visible {
+    background: rgba(122, 47, 180, 0.16);
+    transform: translateY(-1px);
+}
+
+@media (min-width: 1024px) {
+    .section-studio .studio-subnav {
+        position: sticky;
+        top: 64px;
+        z-index: 5;
+        background: linear-gradient(to bottom, var(--color-bg-film), rgba(253, 248, 255, 0.92));
+        padding-block: 8px;
+    }
+}
+
+.section-studio .studio-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.section-studio .studio-decor::before,
+.section-studio .studio-decor::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: url("../img/decor-masks.svg") center/contain no-repeat;
+    opacity: 0.12;
+    animation: studio-decor-float 22s ease-in-out infinite alternate;
+}
+
+.section-studio .studio-decor::before {
+    top: 10%;
+    right: 5%;
+}
+
+.section-studio .studio-decor::after {
+    bottom: 12%;
+    left: 6%;
+    animation-delay: -7s;
+}
+
+@keyframes studio-decor-float {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, -8px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .section-studio .studio-decor::before,
+    .section-studio .studio-decor::after {
+        animation: none;
+        transform: none;
+    }
+}
+
+.studio-layout {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.studio-column h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.studio-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.studio-list li+li {
+    margin-top: 6px;
+}
+
+/* Две карточки "Театр" и "Студия" в верхней части блока студии */
+.section-studio .studio-duo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin: 28px 0 24px;
+}
+
+/* Шапка-интро про театр (крышечка под заголовком) */
+.section-studio .studio-theatre-intro {
+    margin: 12px 0 12px;
+    padding: 16px 18px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.04);
+}
+
+.section-studio .studio-theatre-intro p {
+    margin: 0 auto 4px;
+    max-width: 640px;
+}
+
+.section-studio .studio-theatre-heading {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--color-brand-dark);
+}
+
+.section-studio .studio-theatre-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+.section-studio .studio-theatre-text strong {
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+
+/* STUDIO: шапка и крышечка "Где проходят занятия и показы" */
+
+/* Шапка раздела внутри блока студии */
+.section-studio .section-header {
+    max-width: 640px;
+    margin: 0 0 28px;
+}
+
+.section-studio .section-header--left {
+    margin: 0 0 28px;
+}
+
+/* Выравниваем "Оглавление" и подзаголовок по левому краю */
+.section-studio .section-header--left .section-kicker,
+.section-studio .section-header--left .section-subtitle {
+    text-align: left;
+    margin-left: 0;
+}
+
+.section-studio .section-header--left .section-subtitle {
+    margin-right: 0;
+}
+
+/* Крышечка "Театр-студия" с карточкой */
+.section-studio .studio-theatre-intro {
+    margin: 4px auto 28px;
+    max-width: 960px;
+    padding: 20px 26px 22px;
+    background: radial-gradient(circle at top left,
+            rgba(255, 255, 255, 0.98),
+            #fdf8ff);
+    border-radius: 24px;
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.06);
+    text-align: left;
+}
+
+/* Сам бейдж "Театр-студия" оставляем по центру */
+.section-studio .studio-theatre-intro .section-kicker {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Заголовок внутри карточки */
+.section-studio .studio-theatre-heading {
+    font-size: 18px;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    color: var(--color-brand-dark);
+}
+
+/* Текст с фактами про возраст, филиалы и города */
+.section-studio .studio-theatre-text {
+    max-width: 720px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-main);
+    margin: 0 0 16px;
+}
+
+.section-studio .studio-theatre-text p {
+    margin: 0 0 4px;
+}
+
+/* Кнопка "Посмотреть филиалы" — чуть уверенный размер */
+.section-studio .studio-theatre-branches {
+    min-width: 190px;
+}
+
+/* Две вертикальные дорожки: театральная студия и киношкола */
+
+.section-studio .studio-column {
+    position: relative;
+    padding: 18px 16px 18px;
+    border-radius: 22px;
+    background: var(--color-surface);
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.06);
+    border: 1px solid rgba(122, 47, 180, 0.14);
+    overflow: hidden;
+}
+
+.section-studio .studio-column--theatre {
+    background: radial-gradient(circle at 0 0, rgba(255, 182, 122, 0.25), var(--color-surface));
+}
+
+.section-studio .studio-column--films {
+    background: radial-gradient(circle at 0 0, rgba(122, 47, 180, 0.18), var(--color-surface));
+}
+
+.section-studio .studio-track-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.section-studio .studio-track-icon {
+    flex: 0 0 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.06);
+    margin-right: 10px;
+}
+
+.section-studio .studio-track-icon--theatre {
+    background: radial-gradient(circle at 30% 20%, #ffcf9c, #ff9f60);
+}
+
+.section-studio .studio-track-icon--films {
+    background: radial-gradient(circle at 30% 20%, #f4d4ff, #bb7fff);
+}
+
+.section-studio .studio-track-title {
+    min-width: 0;
+}
+
+.section-studio .studio-track-name {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--brand-dark);
+    margin: 0 0 6px;
+}
+
+.section-studio .studio-track-caption {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-soft);
+}
+
+.section-studio .studio-track-overview {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-main);
+    margin-bottom: 10px;
+}
+
+.section-studio .studio-track-overview p {
+    margin: 0 0 4px;
+}
+
+.section-studio .studio-track-overview p:last-child {
+    margin-bottom: 0;
+}
+
+/* Вертикальный путь ученика */
+
+.section-studio .studio-track-path {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(122, 47, 180, 0.25);
+}
+
+.section-studio .studio-track-path-title {
+    font-size: 13px;
+    margin: 0 0 6px;
+    color: var(--color-text-muted);
+}
+
+.section-studio .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-studio .timeline--vertical .timeline-step {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.section-studio .timeline--vertical .timeline-step:last-child {
+    padding-bottom: 0;
+}
+
+.section-studio .timeline-step-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-brand-dark);
+    z-index: 1;
+    /* Above line */
+}
+
+.section-studio .timeline-step-marker {
+    position: relative;
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid rgba(122, 47, 180, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    transition: all 0.3s ease;
+}
+
+.section-studio .timeline-step-marker::before {
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    width: 2px;
+    height: calc(100% + 10px);
+    /* Connects to next */
+    transform: translateX(-50%);
+    background: rgba(122, 47, 180, 0.15);
+    z-index: 0;
+}
+
+.section-studio .timeline--vertical .timeline-step:hover .timeline-step-marker {
+    border-color: var(--color-brand);
+    background: var(--color-brand-light);
+    transform: scale(1.1);
+}
+
+.section-studio .timeline-step-body {
+    min-width: 0;
+}
+
+.section-studio .timeline-step-title {
+    margin: 0 0 2px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--color-text-main);
+}
+
+.section-studio .timeline-step-text {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-soft);
+}
+
+/* Активный шаг */
+
+.section-studio .timeline-step--active .timeline-step-marker {
+    background: var(--color-brand);
+}
+
+.section-studio .timeline-step--active .timeline-step-number {
+    color: #ffffff;
+}
+
+.section-studio .timeline-step--active .timeline-step-title {
+    color: var(--color-brand-dark);
+}
+
+.section-studio .timeline-step--active .timeline-step-text {
+    color: var(--color-text-main);
+}
+
+/* Лёгкий hover по таймлайну */
+
+.section-studio .timeline--vertical .timeline-step:hover .timeline-step-title {
+    color: var(--color-brand-dark);
+}
+
+/* Базовая карточка с лёгким "сценическим" эффектом */
+.section-studio .studio-card {
+    position: relative;
+    padding: 18px 18px 20px;
+    border-radius: 20px;
+    background: var(--color-surface, #ffffff);
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.06);
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    overflow: hidden;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* "Подиум" под карточкой — сцена/софиты */
+.section-studio .studio-card::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -16px;
+    height: 28px;
+    background: radial-gradient(circle at 50% 0,
+            rgba(122, 47, 180, 0.35),
+            rgba(122, 47, 180, 0) 70%);
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+    pointer-events: none;
+}
+
+.section-studio .studio-card:hover,
+.section-studio .studio-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 46px rgba(8, 2, 26, 0.12);
+    border-color: rgba(122, 47, 180, 0.3);
+}
+
+.section-studio .studio-card:hover::before,
+.section-studio .studio-card:focus-within::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Текст и структура внутри карточек */
+.section-studio .studio-card-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-brand, #7a2fb4);
+    margin-bottom: 6px;
+}
+
+.section-studio .studio-card-title {
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    color: var(--color-brand-dark, #2a103f);
+}
+
+.section-studio .studio-card-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted, #666666);
+    margin: 0 0 10px;
+}
+
+.section-studio .studio-card-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-main, #222222);
+}
+
+/* Лёгкие оттенки фона для различия театра и студии */
+.section-studio .studio-card--theatre {
+    background: radial-gradient(circle at top left,
+            rgba(255, 255, 255, 0.95),
+            #fdf8ff);
+}
+
+.section-studio .studio-card--school {
+    background: radial-gradient(circle at top right,
+            rgba(255, 255, 255, 0.95),
+            #f7fbff);
+}
+
+/* На планшетах и десктопе — две карточки в ряд */
+@media (min-width: 768px) {
+    .section-studio .studio-duo {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+/* Этаж 4: как мы учим и ценности */
+.section-studio .studio-values {
+    margin: 24px 0 20px;
+}
+
+.section-studio .studio-values-header {
+    max-width: 640px;
+    margin-bottom: 14px;
+}
+
+.section-studio .studio-values-title {
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 6px;
+    color: var(--color-brand-dark, #2a103f);
+}
+
+.section-studio .studio-values-lead {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted, #666666);
+}
+
+.section-studio .studio-values-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+/* Карточки ценностей */
+.section-studio .studio-value-card {
+    position: relative;
+    padding: 14px 14px 12px;
+    border-radius: 18px;
+    background: radial-gradient(circle at top left,
+            rgba(122, 47, 180, 0.08),
+            var(--color-bg-film));
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    box-shadow: 0 12px 30px rgba(8, 2, 26, 0.04);
+    overflow: hidden;
+    transform:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+}
+
+.section-studio .studio-value-card::before {
+    content: "";
+    /* Icon placeholder */
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: rgba(122, 47, 180, 0.1);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* лёгкий «свет» снизу, как от рампы */
+.section-studio .studio-value-card::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: -18px;
+    height: 30px;
+    background: radial-gradient(circle at 50% 0,
+            rgba(122, 47, 180, 0.22),
+            rgba(122, 47, 180, 0) 70%);
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition:
+        opacity 0.22s ease-out,
+        transform 0.22s ease-out;
+}
+
+.section-studio .studio-value-card:hover,
+.section-studio .studio-value-card:focus-within {
+    transform: translateY(-3px);
+    border-color: rgba(122, 47, 180, 0.32);
+    box-shadow: 0 16px 40px rgba(8, 2, 26, 0.09);
+    background: radial-gradient(circle at top left,
+            rgba(122, 47, 180, 0.12),
+            var(--color-bg-film));
+}
+
+.section-studio .studio-value-card:hover::after,
+.section-studio .studio-value-card:focus-within::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.section-studio .studio-value-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--color-brand, #7a2fb4);
+    background: rgba(233, 219, 252, 0.9);
+    margin-bottom: 6px;
+}
+
+.section-studio .studio-value-title {
+    margin: 0 0 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--color-brand-dark, #2a103f);
+}
+
+.section-studio .studio-value-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-main, #222222);
+}
+
+/* На планшетах и десктопе — 2×2 карточки */
+@media (min-width: 768px) {
+    .section-studio .studio-values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+}
+
+.studio-meta-row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.studio-meta-block-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.studio-note {
+    max-width: 720px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted, #666);
+    margin: 0 0 12px;
+}
+
+.studio-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.studio-actions .btn+.btn {
+    margin-left: 0;
+}
+
+/* Этаж 6: финальный CTA-блок в секции студии */
+
+.section-studio .studio-cta {
+    margin-top: 18px;
+}
+
+.section-studio .studio-cta-shell {
+    position: relative;
+    padding: 18px 16px 16px;
+    border-radius: 26px;
+    background:
+        radial-gradient(circle at 0% 0%,
+            rgba(122, 47, 180, 0.16),
+            transparent 60%),
+        radial-gradient(circle at 100% 100%,
+            rgba(245, 157, 91, 0.18),
+            transparent 65%),
+        linear-gradient(135deg, #fdf8ff, #fff7f2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 18px 60px rgba(8, 2, 26, 0.18);
+    overflow: hidden;
+}
+
+/* лёгкая «подсветка сцены» снизу блока */
+.section-studio .studio-cta-shell::before {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: -28px;
+    height: 40px;
+    background: radial-gradient(circle at 50% 0,
+            rgba(17, 11, 40, 0.35),
+            transparent 70%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.section-studio .studio-cta-eyebrow {
+    margin: 0 0 4px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(42, 16, 63, 0.8);
+}
+
+.section-studio .studio-cta-title {
+    margin: 0 0 6px;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--color-brand-dark, #2a103f);
+}
+
+.section-studio .studio-cta-text {
+    margin: 0 0 10px;
+    max-width: 640px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-main, #222222);
+}
+
+.section-studio .studio-cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.section-studio .studio-cta-card {
+    position: relative;
+    padding: 12px 14px 12px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(122, 47, 180, 0.08);
+    box-shadow: 0 12px 32px rgba(8, 2, 26, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+}
+
+.section-studio .studio-cta-card:hover,
+.section-studio .studio-cta-card:focus-within {
+    transform: translateY(-3px);
+    border-color: rgba(122, 47, 180, 0.38);
+    box-shadow: 0 16px 40px rgba(8, 2, 26, 0.14);
+    background: linear-gradient(135deg, #ffffff, #faf3ff);
+}
+
+/* шапка карточки: иконка + текст */
+.section-studio .studio-cta-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.section-studio .studio-cta-icon {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 20%,
+            #ffffff,
+            rgba(122, 47, 180, 0.22));
+    box-shadow: 0 6px 18px rgba(8, 2, 26, 0.25);
+}
+
+/* вариации иконок: сцена / студия */
+.section-studio .studio-cta-icon--stage {
+    background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(122, 47, 180, 0.22)),
+        linear-gradient(140deg, #f6b25f, #f56ca0);
+}
+
+.section-studio .studio-cta-icon--studio {
+    background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(122, 47, 180, 0.22)),
+        linear-gradient(140deg, #7a2fb4, #4ba9ff);
+}
+
+.section-studio .studio-cta-card-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--color-brand-dark, #2a103f);
+}
+
+.section-studio .studio-cta-card-tags {
+    margin: 2px 0 0;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--color-text-muted, #666666);
+}
+
+.section-studio .studio-cta-card-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-main, #222222);
+}
+
+.section-studio .studio-cta-card-actions {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.section-studio .studio-cta-card-actions .btn {
+    margin: 0;
+}
+
+/* текстовая ссылка на Яндекс.Афишу */
+.section-studio .studio-cta-secondary-link {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-brand, #7a2fb4);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* подпись для партнёров */
+.section-studio .studio-cta-note {
+    margin: 10px 0 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(34, 34, 34, 0.9);
+}
+
+.section-studio .studio-cta-note a {
+    color: var(--color-brand, #7a2fb4);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* адаптив: две карточки рядом на десктопе */
+@media (min-width: 768px) {
+    .section-studio .studio-cta-shell {
+        padding: 20px 20px 18px;
+    }
+
+    .section-studio .studio-cta-grid {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+        gap: 12px;
+    }
+
+    .section-studio .studio-cta-note {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .studio-meta-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .studio-actions .btn+.btn {
+        margin-left: 8px;
+    }
+}
+
+/* Emozika purple theme — Studio */
+.section-studio {
+    background: transparent;
+}
+
+.section-studio h2 {
+    color: var(--color-brand-dark);
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* Маленькие «плашки» с мета-информацией (возраст, формат, филиалы) */
+.section-studio .studio-meta-row {
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.section-studio .studio-meta-block {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 18px;
+    padding: 12px 14px;
+    border: 1px solid rgba(122, 47, 180, 0.08);
+}
+
+.section-studio .studio-meta-block-title {
+    color: var(--color-brand-dark);
+}
+
+/* Примечание о пробном занятии */
+.section-studio .studio-note {
+    max-width: 720px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+/* CTA: одна жирная кнопка и один спокойный вторичный вариант */
+.section-studio .studio-actions {
+    margin-top: 20px;
+}
+
+.section-studio .studio-actions .btn {
+    padding-inline: 20px;
+}
+
+.section-studio .studio-actions .btn-primary {
+    background-color: var(--color-brand);
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(8, 2, 26, 0.35);
+}
+
+.section-studio .studio-actions .btn-primary:hover {
+    background-color: var(--color-brand-light);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(8, 2, 26, 0.45);
+}
+
+.section-studio .studio-actions .btn-secondary {
+    border-color: rgba(122, 47, 180, 0.3);
+    color: var(--color-brand-dark);
+}
+
+/* Мобильный вид: кнопки в столбик на всю ширину */
+@media (max-width: 575.98px) {
+    .section-studio .studio-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .section-studio .studio-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+/* Путь ученика в студии */
+
+.studio-journey {
+    margin-top: 28px;
+    margin-bottom: 24px;
+    padding: 20px 18px 18px;
+    border-radius: 24px;
+    background: linear-gradient(135deg,
+            rgba(213, 154, 255, 0.16),
+            rgba(255, 248, 242, 0.96));
+    box-shadow: 0 18px 40px rgba(8, 2, 26, 0.06);
+    border: 1px solid rgba(122, 47, 180, 0.1);
+}
+
+.studio-journey-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.studio-journey-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-brand-dark);
+}
+
+.studio-journey-lead {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+/* Линия и шаги */
+
+.studio-journey-track {
+    position: relative;
+    --journey-progress: 0%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 10px 8px;
+    margin-bottom: 18px;
+}
+
+.studio-journey-track::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    background: rgba(122, 47, 180, 0.16);
+}
+
+.studio-journey-track::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    width: var(--journey-progress, 0%);
+    background: linear-gradient(90deg, #f6b25f, #f56ca0, #7a2fb4);
+    transition:
+        width 0.25s ease-out,
+        height 0.25s ease-out;
+}
+
+/* Кнопки шагов */
+
+.studio-journey-step {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    font: inherit;
+    color: var(--color-text-muted);
+}
+
+.studio-journey-step:focus-visible {
+    outline: 2px solid rgba(122, 47, 180, 0.7);
+    outline-offset: 4px;
+    border-radius: 999px;
+}
+
+.studio-journey-step-dot {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+    background-color: #ffffff;
+    border: 2px solid rgba(122, 47, 180, 0.45);
+    box-shadow: 0 8px 20px rgba(8, 2, 26, 0.2);
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.studio-journey-step-label {
+    display: block;
+    font-size: 12px;
+    line-height: 1.4;
+    max-width: 120px;
+}
+
+/* Пройденные шаги — мягче, чем активный, но заметно выделены */
+
+.studio-journey-step.is-past .studio-journey-step-dot {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(122, 47, 180, 0.6);
+    box-shadow: 0 6px 18px rgba(8, 2, 26, 0.18);
+}
+
+.studio-journey-step.is-past .studio-journey-step-label {
+    color: var(--color-brand-dark);
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Активный шаг */
+
+.studio-journey-step.is-active .studio-journey-step-dot {
+    background: radial-gradient(circle at 30% 0, #ffcc80, #ff9f80);
+    color: #2b0c3f;
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 26px rgba(8, 2, 26, 0.45);
+    transform: translateY(-1px);
+}
+
+.studio-journey-step.is-active .studio-journey-step-label {
+    color: var(--color-brand-dark);
+    font-weight: 600;
+}
+
+/* Блок с описанием выбранного шага */
+
+.studio-journey-detail {
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(122, 47, 180, 0.12);
+    box-shadow: 0 12px 26px rgba(8, 2, 26, 0.04);
+}
+
+.studio-journey-detail-title {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-brand-dark);
+}
+
+.studio-journey-detail-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+/* Мобильная адаптация: шаги в колонку, линия вертикальная */
+
+@media (max-width: 575.98px) {
+    .studio-journey {
+        padding: 18px 14px 16px;
+    }
+
+    .studio-journey-track {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 4px 4px;
+        gap: 4px;
+    }
+
+    .studio-journey-track::before {
+        left: 22px;
+        right: auto;
+        top: 18px;
+        bottom: 16px;
+        width: 2px;
+        height: auto;
+        transform: none;
+    }
+
+    .studio-journey-track::after {
+        left: 22px;
+        right: auto;
+        top: 18px;
+        width: 2px;
+        height: var(--journey-progress, 0%);
+        transform: none;
+        background: linear-gradient(180deg, #f6b25f, #f56ca0, #7a2fb4);
+    }
+
+    .studio-journey-step {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        gap: 10px;
+        padding: 6px 0;
+    }
+
+    .studio-journey-step-dot {
+        width: 26px;
+        height: 26px;
+        font-size: 14px;
+    }
+
+    .studio-journey-step-label {
+        max-width: none;
+        font-size: 13px;
+    }
+}
+
+/* STUDIO: бейдж "Театр-студия" поверх карточки */
+
+.section-studio .studio-theatre-intro {
+    position: relative;
+    padding-top: 30px;
+}
+
+/* Плашка "Театр-студия", сидит на бортике карточки */
+.section-studio .studio-theatre-intro>.section-kicker {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 4px 14px;
+    background: var(--color-bg-warm);
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(8, 2, 26, 0.08);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-align: center;
+}

@@ -1,0 +1,42 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../assets/scss/style.scss';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Детский театр и студия «Эмоцика» в Санкт-Петербурге." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+        <ViewTransitions />
+	</head>
+	<body>
+        <Header />
+		<slot />
+        <Footer />
+        <script>
+            import "../assets/js/main.js";
+            
+            // Reset scroll on navigation (optional, Astro handles this mostly)
+            document.addEventListener('astro:after-swap', () => {
+                window.scrollTo(0, 0);
+            });
+        </script>
+	</body>
+</html>

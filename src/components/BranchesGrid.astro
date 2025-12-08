@@ -1,0 +1,46 @@
+---
+interface Props {
+  branches: any[];
+}
+
+const { branches } = Astro.props;
+---
+
+<div class="branch-cards-grid">
+    {branches.map(branch => {
+        const isAdults = branch.isAdults; 
+        const link = branch.mapLink || "#contacts";
+        /* data-adults attribute: if true, set it. if false, don't set it (or set to "false"?)
+           In HTML attribute existence is enough. 
+           But let's follow the previous logic: data-adults if isAdults.
+        */
+        
+        return (
+            <article 
+                class="branch-card" 
+                data-metro={(branch.metro || "").toLowerCase()} 
+                data-adults={isAdults ? "" : undefined}
+            >
+                <div class="branch-card__header">
+                    <h3 class="branch-card__title">{branch.title}</h3>
+                    {isAdults && <span class="branch-card__badge">18+</span>}
+                </div>
+                <div class="branch-card__body">
+                    <div class="branch-card__info-row">
+                        <span class="branch-card__icon branch-card__icon--metro">M</span>
+                        <span class="branch-card__text">{branch.metro || "Метро"}</span>
+                    </div>
+                    <div class="branch-card__info-row">
+                        <span class="branch-card__icon branch-card__icon--location">📍</span>
+                        <span class="branch-card__text">{branch.address}</span>
+                    </div>
+                </div>
+                <div class="branch-card__footer">
+                    <a href={link} target="_blank" rel="noopener noreferrer" class="branch-card__link">
+                        Показать на карте
+                    </a>
+                </div>
+            </article>
+        );
+    })}
+</div>

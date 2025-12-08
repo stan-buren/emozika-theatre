@@ -1,0 +1,29 @@
+---
+interface Props {
+  awards: {
+      festivalId: string;
+      label: string;
+      sublabel?: string;
+  }[];
+}
+
+const { awards } = Astro.props;
+// Flatten 5x repetition for infinite scroll
+const expandedAwards = Array.from({ length: 5 }).flatMap(() => awards);
+---
+
+<div class="awards-strip awards-strip--auto" data-awards-strip style="--awards-shift: -20%;">
+  <div class="awards-strip-viewport is-draggable">
+    <div class="awards-strip-inner" data-top-awards-root data-awards-repeat="5">
+      {expandedAwards.map((award) => (
+        <article 
+          class={`award-badge ${award.label.includes('Гран-при') ? 'award-badge--grandprix' : ''}`}
+          data-festival-id={award.festivalId}
+        >
+          <h3 class="award-badge-title">{award.label}</h3>
+          {award.sublabel && <p class="award-badge-text">{award.sublabel}</p>}
+        </article>
+      ))}
+    </div>
+  </div>
+</div>
