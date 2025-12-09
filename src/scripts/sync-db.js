@@ -89,7 +89,7 @@ async function vkRequest(method, params = {}) {
 async function fetchAndSavePhotos() {
     console.log('📸 Fetching photos (Full Album Scan)...');
 
-    // 1. Fetch ALL Albums
+    // 1. Fetch ALL Albums (including system: wall, profile)
     let allAlbums = [];
     let offset = 0;
     let hasMoreAlbums = true;
@@ -99,13 +99,14 @@ async function fetchAndSavePhotos() {
         const albumsData = await vkRequest('photos.getAlbums', {
             owner_id: OWNER_ID,
             need_covers: 1,
-            count: 20,
+            need_system: 1, // [NEW] Fetch wall, profile, saved
+            count: 50,      // Increase batch
             offset: offset
         });
 
         if (albumsData && albumsData.items && albumsData.items.length > 0) {
             allAlbums.push(...albumsData.items);
-            offset += 20;
+            offset += 50;
             if (offset >= albumsData.count) hasMoreAlbums = false;
         } else {
             hasMoreAlbums = false;
@@ -118,16 +119,20 @@ async function fetchAndSavePhotos() {
 
     // 2. Process Each Album
     for (const album of allAlbums) {
-        console.log(`   📂 [${album.title}] (${album.size} photos)`);
+        console.log(`   📂 [${album.title}] (ID: ${album.id}, Size: ${album.size})`);
+
+        if (album.size === 0) continue; // Skip empty
 
         let photoOffset = 0;
         let hasMorePhotos = true;
+        
+        // Optimisation: Skip if we already have all photos (basic check could be added here, but upsert is safe)
 
         while (hasMorePhotos) {
             const photos = await vkRequest('photos.get', {
                 owner_id: OWNER_ID,
                 album_id: album.id,
-                count: 50, // Max 50 usually
+                count: 100, // Max 1000 allowed, but be safe
                 offset: photoOffset,
                 photo_sizes: 1
             });
@@ -140,7 +145,7 @@ async function fetchAndSavePhotos() {
                             id: p.id,
                             owner_id: p.owner_id,
                             album_id: p.album_id,
-                            album_title: album.title, // [NEW]
+                            album_title: album.title,
                             url: bestUrl,
                             caption: p.text || album.title,
                             date: p.date,
@@ -152,10 +157,10 @@ async function fetchAndSavePhotos() {
 
                 insertTx(photos.items);
                 totalPhotosSynced += photos.items.length;
-                photoOffset += 50;
+                photoOffset += photos.items.length;
 
                 if (photoOffset >= photos.count) hasMorePhotos = false;
-                await sleep(200); // Gentle delay
+                await sleep(150); // Faster sync
             } else {
                 hasMorePhotos = false;
             }
@@ -348,40 +353,59 @@ async function fetchComments(topicId) {
 }
 
 async function fetchAndSaveVideos() {
-    console.log('🎥 Fetching videos...');
+    console.log('🎥 Fetching videos (Pagination Enabled)...');
 
-    // Fetch all videos (up to 200, assume enough for now, or loop if needed)
-    // We fetch ALL because "Films" album ID might change or we might want specific queries later
-    const data = await vkRequest('video.get', {
-        owner_id: OWNER_ID,
-        count: 200,
-        extended: 1 // IMPORTANT for privacy check and duration
-    });
+    let offset = 0;
+    const count = 200; // Max allowed
+    let hasMore = true;
+    let totalVideos = 0;
 
-    if (!data || !data.items) return;
+    while (hasMore) {
+        console.log(`   ⬇️ Fetching videos offset ${offset}...`);
+        
+        const data = await vkRequest('video.get', {
+            owner_id: OWNER_ID,
+            count: count,
+            offset: offset,
+            extended: 1
+        });
 
-    const insertTx = db.transaction((items) => {
-        for (const v of items) {
-            // Extract best image
-            const bestImage = getBestPhotoUrl(v.image);
-
-            insertVideo.run({
-                id: v.id,
-                owner_id: v.owner_id,
-                title: v.title,
-                description: v.description || '',
-                duration: v.duration,
-                image_url: bestImage,
-                player_url: v.player,
-                album_ids: JSON.stringify(v.album_ids || []), // Some videos have no album
-                date: v.date,
-                type: v.type || 'video'
-            });
+        if (!data || !data.items || data.items.length === 0) {
+            hasMore = false;
+            break;
         }
-    });
 
-    insertTx(data.items);
-    console.log(`   ✅ Saved ${data.items.length} videos to DB.`);
+        const insertTx = db.transaction((items) => {
+            for (const v of items) {
+                // Extract best image
+                const bestImage = getBestPhotoUrl(v.image);
+
+                insertVideo.run({
+                    id: v.id,
+                    owner_id: v.owner_id,
+                    title: v.title,
+                    description: v.description || '',
+                    duration: v.duration,
+                    image_url: bestImage,
+                    player_url: v.player,
+                    album_ids: JSON.stringify(v.album_ids || []), 
+                    date: v.date,
+                    type: v.type || 'video'
+                });
+            }
+        });
+
+        insertTx(data.items);
+        totalVideos += data.items.length;
+        offset += count;
+
+        if (offset >= data.count) {
+            hasMore = false;
+        }
+        await sleep(350);
+    }
+
+    console.log(`   ✅ Saved ${totalVideos} videos to DB.`);
 }
 
 function getBestPhotoUrl(sizes) {
