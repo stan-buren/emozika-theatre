@@ -2,9 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import TheatreHero from '../../components/theatre/TheatreHero.astro';
 import PlaybillGrid from '../../components/theatre/PlaybillGrid.astro';
+import YandexWidgetScript from '../../components/theatre/YandexWidgetScript.astro';
+
 ---
 
 <Layout title="Театр Эмоцика | Спектакли и Билеты" description="Репертуарный детский театр в Гранд Каньоне. Афиша спектаклей, купить билеты." theme="theatre">
+    <YandexWidgetScript />
     <main class="theatre-page">
         <!-- Brand Header (Velvet Curtain) -->
         <TheatreHero />

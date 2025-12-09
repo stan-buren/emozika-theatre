@@ -1,44 +1,60 @@
 ---
-const plays = [
-    { 
-        id: 1, 
-        title: "Снежная Королева", 
-        date: "24 декабря, 12:00", 
-        image: "https://images.unsplash.com/photo-1543596853-4881d39b35e6?auto=format&fit=crop&q=80",
-        age: "6+"
-    },
-    { 
-        id: 2, 
-        title: "Маленький Принц", 
-        date: "25 декабря, 15:00", 
-        image: "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&q=80",
-        age: "10+"
-    },
-    { 
-        id: 3, 
-        title: "Волшебная Лампа", 
-        date: "30 декабря, 18:00", 
-        image: "https://images.unsplash.com/photo-1629255823819-215f79986b51?auto=format&fit=crop&q=80",
-        age: "5+"
-    }
-];
+import playsData from '../../data/plays.json';
 ---
 
 <div class="playbill-grid">
-    {plays.map(play => (
+    {playsData.map(play => (
         <article class="playbill-card">
             <div class="playbill-card__image-wrapper">
                  <img src={play.image} alt={play.title} class="playbill-card__image" loading="lazy" />
+                 <span class="playbill-card__age-badge">{play.age}</span>
             </div>
             
             <div class="playbill-card__content">
-                <span class="playbill-card__meta">{play.date} • {play.age}</span>
+                <div class="playbill-card__meta-row">
+                    <span class="playbill-card__date">{play.date}</span>
+                </div>
+                
                 <h3 class="playbill-card__title">{play.title}</h3>
                 
-                <button class="btn-theatre-gold mt-4" onclick={`alert('Яндекс.Афиша: Покупка билета на ${play.title}')`}>
-                    Купить билет
-                </button>
+                <div class="playbill-card__footer">
+                    <span class="playbill-card__price">{play.price}</span>
+                    <!-- 
+                        Yandex Afisha Button 
+                        Uses standard class 'ya-ticket-button' or custom trigger if script configured so.
+                        We'll use a custom data attribute for our JS adapter if needed, 
+                        or just standard onclick for now which the script might intercept.
+                    -->
+                    <button 
+                        class="btn-theatre-gold" 
+                        data-yandex-ticket-event={play.yandexEventId}
+                        onclick={`console.log('Open Widget for ${play.yandexEventId}')`}
+                    >
+                        Купить билет
+                    </button>
+                </div>
             </div>
         </article>
     ))}
 </div>
+
+<script>
+    // Simple adapter to handle clicks if Yandex script isn't auto-binding
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-yandex-ticket-event]');
+        if (btn) {
+            // If real Yandex Widget API is present:
+            // window.YandexTickets.open(btn.dataset.yandexTicketEvent)
+            
+            // For now, mockup alert
+            const eventId = btn.dataset.yandexTicketEvent;
+            
+            if (window.YandexTickets) {
+                 // Real API call would go here
+                 console.log('Yandex API detected, opening', eventId);
+            } else {
+                 alert(`Здесь откроется виджет Яндекс.Афиши для события: ${eventId}\n(ID события нужно заменить на реальный)`);
+            }
+        }
+    });
+</script>

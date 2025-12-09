@@ -31,6 +31,6 @@
 
 // Pages
 @use "pages/error";
-@use "pages/studio";
+@use "pages/studio" as studio-page;
 @use "pages/cinema";
 @use "pages/theatre";

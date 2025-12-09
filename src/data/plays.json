@@ -2,36 +2,37 @@
     {
         "id": "snow-queen",
         "title": "Снежная Королева",
-        "type": "Квест-спектакль",
-        "description": "Погружение в сказку, квест по театру и встреча с Дедом Морозом. Продолжительность — 2 часа.",
-        "poster": "/assets/img/posters/snow-queen.webp",
-        "details": {
-            "school": {
-                "title": "Для классов (группы)",
-                "features": [
-                    "Группы до 35 детей",
-                    "Квест + Спектакль + Дискотека",
-                    "Подарки каждому участнику"
-                ],
-                "action": {
-                    "text": "Заявка для класса",
-                    "link": "/about#contacts",
-                    "type": "primary"
-                }
-            },
-            "family": {
-                "title": "Для семьи",
-                "features": [
-                    "Камерные показы (до 50 мест)",
-                    "Фотосессия с героями",
-                    "Билеты от 1200₽"
-                ],
-                "action": {
-                    "text": "Купить билет",
-                    "link": "https://clck.ru/3QWtC2",
-                    "type": "outline"
-                }
-            }
-        }
+        "date": "24 декабря, 12:00",
+        "image": "https://images.unsplash.com/photo-1543596853-4881d39b35e6?auto=format&fit=crop&q=80",
+        "age": "6+",
+        "price": "от 800 ₽",
+        "yandexEventId": "example_event_1"
+    },
+    {
+        "id": "little-prince",
+        "title": "Маленький Принц",
+        "date": "25 декабря, 15:00",
+        "image": "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&q=80",
+        "age": "10+",
+        "price": "от 1000 ₽",
+        "yandexEventId": "example_event_2"
+    },
+    {
+        "id": "magic-lamp",
+        "title": "Волшебная Лампа",
+        "date": "30 декабря, 18:00",
+        "image": "https://images.unsplash.com/photo-1629255823819-215f79986b51?auto=format&fit=crop&q=80",
+        "age": "5+",
+        "price": "от 900 ₽",
+        "yandexEventId": "example_event_3"
+    },
+    {
+        "id": "chipollino",
+        "title": "Приключения Чиполлино",
+        "date": "5 января, 11:00",
+        "image": "https://images.unsplash.com/photo-1615818987056-553b514a3835?auto=format&fit=crop&q=80",
+        "age": "4+",
+        "price": "от 700 ₽",
+        "yandexEventId": "example_event_4"
     }
 ]
