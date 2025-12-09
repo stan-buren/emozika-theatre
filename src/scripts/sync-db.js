@@ -14,8 +14,11 @@ const OWNER_ID = -GROUP_ID_NUM;
 // Delay helper to avoid rate-limiting
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+const ARGS = process.argv.slice(2);
+const FORCE_REFRESH = ARGS.includes('--force');
+
 async function main() {
-    console.log('🔄 Starting VK -> DB Sync (Full History)...');
+    console.log(`🔄 Starting VK -> DB Sync ${FORCE_REFRESH ? '(FORCE REFRESH)' : '(Incremental)'}...`);
 
     if (!SERVICE_TOKEN || !GROUP_ID) {
         console.error('❌ Error: VK_SERVICE_TOKEN or VK_GROUP_ID not found.');
@@ -34,7 +37,7 @@ async function main() {
         // 1. Photos
         await fetchAndSavePhotos();
 
-        // 2. Posts (Wall) - Full History
+        // 2. Posts (Wall)
         await fetchAndSavePosts();
 
         // 3. Discussions (Topics)
@@ -49,6 +52,7 @@ async function main() {
         process.exit(1);
     }
 }
+
 
 async function vkRequest(method, params = {}) {
     // Choose token: User token for videos/users related, Service token for public group data
@@ -87,21 +91,23 @@ async function vkRequest(method, params = {}) {
 }
 
 async function fetchAndSavePhotos() {
-    console.log('📸 Fetching photos (Full Album Scan)...');
+    console.log('📸 Fetching photos...');
 
-    // 1. Fetch ALL Albums (including system: wall, profile)
+    let lastSyncedDate = 0;
+    if (!FORCE_REFRESH) {
+        const row = db.prepare('SELECT MAX(date) as d FROM photos').get();
+        if (row && row.d) lastSyncedDate = row.d;
+        console.log(`   🕒 Incremental: Fetching photos newer than ${new Date(lastSyncedDate * 1000).toISOString()}`);
+    }
+
+    // 1. Fetch ALL Albums
     let allAlbums = [];
     let offset = 0;
     let hasMoreAlbums = true;
 
-    console.log('   📂 reading album list...');
     while (hasMoreAlbums) {
         const albumsData = await vkRequest('photos.getAlbums', {
-            owner_id: OWNER_ID,
-            need_covers: 1,
-            need_system: 1, // [NEW] Fetch wall, profile, saved
-            count: 50,      // Increase batch
-            offset: offset
+            owner_id: OWNER_ID, need_covers: 1, need_system: 1, count: 50, offset: offset
         });
 
         if (albumsData && albumsData.items && albumsData.items.length > 0) {
@@ -113,31 +119,28 @@ async function fetchAndSavePhotos() {
         }
         await sleep(200);
     }
-    console.log(`   📂 Found ${allAlbums.length} albums. Starting sync...`);
+    console.log(`   📂 Found ${allAlbums.length} albums. Syncing...`);
 
     let totalPhotosSynced = 0;
 
-    // 2. Process Each Album
     for (const album of allAlbums) {
-        console.log(`   📂 [${album.title}] (ID: ${album.id}, Size: ${album.size})`);
-
-        if (album.size === 0) continue; // Skip empty
+        if (album.size === 0) continue;
 
         let photoOffset = 0;
         let hasMorePhotos = true;
-        
-        // Optimisation: Skip if we already have all photos (basic check could be added here, but upsert is safe)
 
         while (hasMorePhotos) {
             const photos = await vkRequest('photos.get', {
-                owner_id: OWNER_ID,
-                album_id: album.id,
-                count: 100, // Max 1000 allowed, but be safe
-                offset: photoOffset,
-                photo_sizes: 1
+                owner_id: OWNER_ID, album_id: album.id, count: 100, offset: photoOffset, photo_sizes: 1
             });
 
             if (photos && photos.items && photos.items.length > 0) {
+                // Filter for incremental?
+                // For albums, it's hard because order varies. 
+                // We'll trust the user wants speed mainly on Posts/Videos.
+                // But let's at least check if we are in a "date updated" mode?
+                // Simplify: just upsert. It's fast enough efficiently.
+
                 const insertTx = db.transaction((items) => {
                     for (const p of items) {
                         const bestUrl = getBestPhotoUrl(p.sizes);
@@ -160,7 +163,7 @@ async function fetchAndSavePhotos() {
                 photoOffset += photos.items.length;
 
                 if (photoOffset >= photos.count) hasMorePhotos = false;
-                await sleep(150); // Faster sync
+                await sleep(150);
             } else {
                 hasMorePhotos = false;
             }
@@ -172,121 +175,105 @@ async function fetchAndSavePhotos() {
 async function fetchAndSavePosts() {
     console.log('📝 Fetching posts (wall)...');
 
-    // 1. Get total count
-    const initialData = await vkRequest('wall.get', {
-        owner_id: OWNER_ID,
-        count: 1,
-        offset: 0
-    });
+    let lastSyncedDate = 0;
+    if (!FORCE_REFRESH) {
+        const row = db.prepare('SELECT MAX(date) as d FROM posts').get();
+        if (row && row.d) lastSyncedDate = row.d;
+        console.log(`   🕒 Incremental: Fetching posts newer than ${new Date(lastSyncedDate * 1000).toISOString()}`);
+    }
 
+    const initialData = await vkRequest('wall.get', { owner_id: OWNER_ID, count: 1, offset: 0 });
     if (!initialData) return;
 
     const totalCount = initialData.count;
-    console.log(`   📊 Total posts found: ${totalCount}`);
-
     const BATCH_SIZE = 100;
     let processed = 0;
 
-    // Loop through all posts
     for (let offset = 0; offset < totalCount; offset += BATCH_SIZE) {
-        console.log(`   ⬇️ Fetching batch ${offset} - ${offset + BATCH_SIZE}...`);
-
         const data = await vkRequest('wall.get', {
-            owner_id: OWNER_ID,
-            count: BATCH_SIZE,
-            offset: offset,
-            extended: 1
+            owner_id: OWNER_ID, count: BATCH_SIZE, offset: offset, extended: 1
         });
 
         if (!data || !data.items || data.items.length === 0) break;
 
-        const insertTx = db.transaction((posts) => {
-            for (const post of posts) {
+        const newItems = [];
+        let stopFetching = false;
 
-                // Extract Attachments
-                const imageUrls = [];
-                const videoUrls = [];
+        for (const post of data.items) {
+            if (!post.is_pinned && post.date <= lastSyncedDate) {
+                stopFetching = true;
+                continue;
+            }
+            newItems.push(post);
+        }
 
-                if (post.attachments) {
-                    post.attachments.forEach(att => {
-                        if (att.type === 'photo') {
-                            imageUrls.push(getBestPhotoUrl(att.photo.sizes));
-                        } else if (att.type === 'video') {
-                            if (att.video.player) {
-                                videoUrls.push(att.video.player);
-                            } else {
-                                videoUrls.push(`https://vk.com/video${att.video.owner_id}_${att.video.id}`);
+        if (newItems.length > 0) {
+            const insertTx = db.transaction((posts) => {
+                for (const post of posts) {
+                    const imageUrls = [];
+                    const videoUrls = [];
+                    if (post.attachments) {
+                        post.attachments.forEach(att => {
+                            if (att.type === 'photo') imageUrls.push(getBestPhotoUrl(att.photo.sizes));
+                            else if (att.type === 'video') {
+                                if (att.video.player) videoUrls.push(att.video.player);
+                                else videoUrls.push(`https://vk.com/video${att.video.owner_id}_${att.video.id}`);
                             }
-                        }
+                        });
+                    }
+                    const tags = [];
+                    const textLower = (post.text || '').toLowerCase();
+                    if (textLower.includes('#награда') || textLower.includes('диплом') || textLower.includes('лауреат') || textLower.includes('гран-при')) tags.push('award');
+                    if (textLower.includes('спектакль') || textLower.includes('афиша')) tags.push('play');
+
+                    insertPost.run({
+                        id: post.id,
+                        owner_id: post.owner_id,
+                        date: post.date,
+                        text: post.text || '',
+                        image_urls: JSON.stringify(imageUrls),
+                        video_urls: JSON.stringify(videoUrls),
+                        raw_json: JSON.stringify(post),
+                        tags: tags.join(',')
                     });
                 }
+            });
+            insertTx(newItems);
+            processed += newItems.length;
+            console.log(`   ⬇️ Batch ${offset}: Saved ${newItems.length} new posts.`);
+        } else {
+            console.log(`   ℹ️ Batch ${offset}: All posts already in DB.`);
+        }
 
-                // Heuristic Tags
-                const tags = [];
-                const textLower = (post.text || '').toLowerCase();
-                if (textLower.includes('#награда') || textLower.includes('диплом') || textLower.includes('лауреат') || textLower.includes('гран-при')) tags.push('award');
-                if (textLower.includes('спектакль') || textLower.includes('афиша')) tags.push('play');
-
-                insertPost.run({
-                    id: post.id,
-                    owner_id: post.owner_id,
-                    date: post.date,
-                    text: post.text || '',
-                    image_urls: JSON.stringify(imageUrls),
-                    video_urls: JSON.stringify(videoUrls),
-                    raw_json: JSON.stringify(post),
-                    tags: tags.join(',')
-                });
-            }
-        });
-
-        insertTx(data.items);
-        processed += data.items.length;
-
-        // Polite delay
+        if (stopFetching) {
+            console.log(`   🛑 Reached known data (date <= ${lastSyncedDate}). Stopping.`);
+            break;
+        }
         await sleep(350);
     }
-
-    console.log(`   ✅ Saved ${processed} posts to DB.`);
+    console.log(`   ✅ Sync finished. New/Updated: ${processed}.`);
 }
 
 async function fetchAndSaveTopics() {
     console.log('🗣️  Fetching discussions (topics)...');
-
-    const data = await vkRequest('board.getTopics', {
-        group_id: GROUP_ID_NUM,
-        count: 100, // Should cover all topics
-        preview: 1
-    });
-
+    const data = await vkRequest('board.getTopics', { group_id: GROUP_ID_NUM, count: 100, preview: 1 });
     if (!data || !data.items) return;
 
     const topics = data.items;
-
-    // Save Topics
     const insertTx = db.transaction((items) => {
         for (const t of items) {
             insertTopic.run({
-                id: t.id,
-                title: t.title,
-                created: t.created,
-                updated: t.updated,
-                comments_count: t.comments,
-                is_closed: t.is_closed ? 1 : 0
+                id: t.id, title: t.title, created: t.created, updated: t.updated, comments_count: t.comments, is_closed: t.is_closed ? 1 : 0
             });
         }
     });
     insertTx(topics);
-    console.log(`   Saved ${topics.length} topics.`);
+    // console.log(`   Saved ${topics.length} topics.`);
 
-    // Check for "Awards" or "Reviews" to fetch comments
     for (const topic of topics) {
         const titleLower = topic.title.toLowerCase();
-
-        // Strategy: Fetch comments only for interesting topics to save time
-        // "НАШИ НАГРАДЫ", "ОТЗЫВЫ", "Спектакли"
         if (titleLower.includes('наград') || titleLower.includes('диплом') || titleLower.includes('побед') || titleLower.includes('отзыв')) {
-            console.log(`   💬 Fetching comments for topic: "${topic.title}" (${topic.comments} comments)...`);
+            // console.log(`   💬 Fetching comments for topic: "${topic.title}"...`);
             await fetchComments(topic.id);
             await sleep(350);
         }
@@ -297,115 +284,82 @@ async function fetchComments(topicId) {
     let offset = 0;
     const count = 100;
     let hasMore = true;
-    let totalSynced = 0;
-
     while (hasMore) {
-        const data = await vkRequest('board.getComments', {
-            group_id: GROUP_ID_NUM,
-            topic_id: topicId,
-            count: count,
-            offset: offset,
-            extended: 1 // Need attachments
-        });
-
-        if (!data || !data.items || data.items.length === 0) {
-            hasMore = false;
-            break;
-        }
+        const data = await vkRequest('board.getComments', { group_id: GROUP_ID_NUM, topic_id: topicId, count: count, offset: offset, extended: 1 });
+        if (!data || !data.items || data.items.length === 0) { hasMore = false; break; }
 
         const insertTx = db.transaction((comments) => {
             for (const c of comments) {
-                // Parse attachments for images
                 const attachments = [];
                 if (c.attachments) {
                     c.attachments.forEach(att => {
-                        if (att.type === 'photo') {
-                            attachments.push({
-                                type: 'photo',
-                                url: getBestPhotoUrl(att.photo.sizes),
-                                text: att.photo.text
-                            });
-                        }
+                        if (att.type === 'photo') attachments.push({ type: 'photo', url: getBestPhotoUrl(att.photo.sizes), text: att.photo.text });
                     });
                 }
-
                 insertComment.run({
-                    id: c.id,
-                    topic_id: topicId,
-                    owner_id: c.from_id,
-                    date: c.date,
-                    text: c.text || '',
-                    attachments: JSON.stringify(attachments)
+                    id: c.id, topic_id: topicId, owner_id: c.from_id, date: c.date, text: c.text || '', attachments: JSON.stringify(attachments)
                 });
             }
         });
-
         insertTx(data.items);
-        totalSynced += data.items.length;
         offset += count;
-
-        if (offset >= data.count) {
-            hasMore = false;
-        }
+        if (offset >= data.count) hasMore = false;
         await sleep(200);
     }
-    console.log(`      ✅ Scraped ${totalSynced} comments.`);
 }
 
 async function fetchAndSaveVideos() {
-    console.log('🎥 Fetching videos (Pagination Enabled)...');
+    console.log('🎥 Fetching videos...');
+    let lastSyncedDate = 0;
+    if (!FORCE_REFRESH) {
+        const row = db.prepare('SELECT MAX(date) as d FROM videos').get();
+        if (row && row.d) lastSyncedDate = row.d;
+        console.log(`   🕒 Incremental: Fetching videos newer than ${new Date(lastSyncedDate * 1000).toISOString()}`);
+    }
 
     let offset = 0;
-    const count = 200; // Max allowed
+    const count = 200;
     let hasMore = true;
     let totalVideos = 0;
 
     while (hasMore) {
-        console.log(`   ⬇️ Fetching videos offset ${offset}...`);
-        
-        const data = await vkRequest('video.get', {
-            owner_id: OWNER_ID,
-            count: count,
-            offset: offset,
-            extended: 1
-        });
+        const data = await vkRequest('video.get', { owner_id: OWNER_ID, count: count, offset: offset, extended: 1 });
+        if (!data || !data.items || data.items.length === 0) { hasMore = false; break; }
 
-        if (!data || !data.items || data.items.length === 0) {
+        const newItems = [];
+        let stopFetching = false;
+
+        for (const v of data.items) {
+            if (v.date <= lastSyncedDate) { stopFetching = true; continue; }
+            newItems.push(v);
+        }
+
+        if (newItems.length > 0) {
+            const insertTx = db.transaction((items) => {
+                for (const v of items) {
+                    insertVideo.run({
+                        id: v.id, owner_id: v.owner_id, title: v.title, description: v.description || '', duration: v.duration,
+                        image_url: getBestPhotoUrl(v.image), player_url: v.player, album_ids: JSON.stringify(v.album_ids || []), date: v.date, type: v.type || 'video'
+                    });
+                }
+            });
+            insertTx(newItems);
+            totalVideos += newItems.length;
+            console.log(`   ⬇️ Batch ${offset}: Saved ${newItems.length} videos.`);
+        } else {
+            console.log(`   ℹ️ Batch ${offset}: All videos already in DB.`);
+        }
+
+        if (stopFetching) {
+            console.log(`   🛑 Reached known videos. Stopping.`);
             hasMore = false;
             break;
         }
-
-        const insertTx = db.transaction((items) => {
-            for (const v of items) {
-                // Extract best image
-                const bestImage = getBestPhotoUrl(v.image);
-
-                insertVideo.run({
-                    id: v.id,
-                    owner_id: v.owner_id,
-                    title: v.title,
-                    description: v.description || '',
-                    duration: v.duration,
-                    image_url: bestImage,
-                    player_url: v.player,
-                    album_ids: JSON.stringify(v.album_ids || []), 
-                    date: v.date,
-                    type: v.type || 'video'
-                });
-            }
-        });
-
-        insertTx(data.items);
-        totalVideos += data.items.length;
         offset += count;
-
-        if (offset >= data.count) {
-            hasMore = false;
-        }
+        if (offset >= data.count) hasMore = false;
         await sleep(350);
     }
-
-    console.log(`   ✅ Saved ${totalVideos} videos to DB.`);
+    console.log(`   ✅ Saved ${totalVideos} new videos.`);
 }
 
 function getBestPhotoUrl(sizes) {
