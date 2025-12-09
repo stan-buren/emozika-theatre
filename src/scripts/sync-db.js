@@ -57,7 +57,7 @@ async function main() {
 async function vkRequest(method, params = {}) {
     // Choose token: User token for videos/users related, Service token for public group data
     let token = SERVICE_TOKEN;
-    if (method.startsWith('video.') && USER_TOKEN) {
+    if ((method.startsWith('video.') || method.startsWith('photos.')) && USER_TOKEN) {
         token = USER_TOKEN;
     }
 
@@ -93,17 +93,11 @@ async function vkRequest(method, params = {}) {
 async function fetchAndSavePhotos() {
     console.log('📸 Fetching photos...');
 
-    let lastSyncedDate = 0;
-    if (!FORCE_REFRESH) {
-        const row = db.prepare('SELECT MAX(date) as d FROM photos').get();
-        if (row && row.d) lastSyncedDate = row.d;
-        console.log(`   🕒 Incremental: Fetching photos newer than ${new Date(lastSyncedDate * 1000).toISOString()}`);
-    }
-
     // 1. Fetch ALL Albums
     let allAlbums = [];
     let offset = 0;
     let hasMoreAlbums = true;
+
 
     while (hasMoreAlbums) {
         const albumsData = await vkRequest('photos.getAlbums', {
@@ -121,47 +115,115 @@ async function fetchAndSavePhotos() {
     }
     console.log(`   📂 Found ${allAlbums.length} albums. Syncing...`);
 
+    // MANUALLY Add System Albums that might be missed
+    // 'Wall Photos' usually has ID -7. 'Profile Photos'ID -6.
+    // 'Saved Photos' ID -15.
+    const systemAlbums = [
+        { id: -7, apiId: 'wall', title: 'Wall Photos', size: 999999 },
+        { id: -6, apiId: 'profile', title: 'Profile Photos', size: 999999 },
+        { id: -15, apiId: 'saved', title: 'Saved Photos', size: 999999 }
+    ];
+
+    for (const sys of systemAlbums) {
+        if (!allAlbums.find(a => a.id === sys.id)) {
+            console.log(`   ➕ Adding system album manually: [${sys.title}]`);
+            allAlbums.push(sys);
+        }
+    }
+
     let totalPhotosSynced = 0;
 
     for (const album of allAlbums) {
-        if (album.size === 0) continue;
+        // console.log(`   📂 Inspecting [${album.title}] ID=${album.id} Size=${album.size}...`);
+
+        if (album.size === 0) {
+            // console.log(`      Skipping empty.`);
+            continue;
+        }
+
+        let albumLastDate = 0;
+        if (!FORCE_REFRESH) {
+            const row = db.prepare('SELECT MAX(date) as d FROM photos WHERE album_id = ?').get(album.id);
+            if (row && row.d) albumLastDate = row.d;
+        }
+
+        if (album.id === -7 || album.id === -6 || album.id === -15 || album.apiId === 'wall' || album.apiId === 'saved') {
+            // System albums: Force full check to ensure history is backfilled if missing
+            // (Incremental check assumes we have history, but for these we might only have recent or none)
+            albumLastDate = 0;
+        }
 
         let photoOffset = 0;
         let hasMorePhotos = true;
 
+        console.log(`   📂 Checking [${album.title}] (ID: ${album.id})...`);
+
         while (hasMorePhotos) {
             const photos = await vkRequest('photos.get', {
-                owner_id: OWNER_ID, album_id: album.id, count: 100, offset: photoOffset, photo_sizes: 1
+                owner_id: OWNER_ID,
+                album_id: album.apiId || album.id, // Use string 'wall' if available
+                count: 100,
+                offset: photoOffset,
+                photo_sizes: 1
             });
 
             if (photos && photos.items && photos.items.length > 0) {
-                // Filter for incremental?
-                // For albums, it's hard because order varies. 
-                // We'll trust the user wants speed mainly on Posts/Videos.
-                // But let's at least check if we are in a "date updated" mode?
-                // Simplify: just upsert. It's fast enough efficiently.
+                const newItems = [];
+                let stopAlbum = false;
 
-                const insertTx = db.transaction((items) => {
-                    for (const p of items) {
-                        const bestUrl = getBestPhotoUrl(p.sizes);
-                        insertPhoto.run({
-                            id: p.id,
-                            owner_id: p.owner_id,
-                            album_id: p.album_id,
-                            album_title: album.title,
-                            url: bestUrl,
-                            caption: p.text || album.title,
-                            date: p.date,
-                            width: 0,
-                            height: 0
-                        });
+                for (const p of photos.items) {
+                    if (p.date > albumLastDate) {
+                        newItems.push(p);
+                    } else if (p.date <= albumLastDate) {
+                        // If we hit an old photo, and we are traversing backwards (default),
+                        // we can stop? 
+                        // photos.get default sort order is usually newest first (rev=1 implied or observed).
+                        // Let's assume safely we can stop if we see known date.
+                        // BUT safety first: Wall photos might be mixed? 
+                        // Wall is chronological. 
+                        // Let's filter but fetch a bit more just in case.
+                        // Actually, just filtering is safe.
                     }
-                });
+                }
 
-                insertTx(photos.items);
-                totalPhotosSynced += photos.items.length;
+                // If NO items in this batch are new, and we have a lastSyncedDate > 0, 
+                // we can probably stop for this album (assuming descending sort).
+                // Let's rely on simple filter first.
+                // Simple Optimization: If all items in batch are old, stop.
+                if (albumLastDate > 0 && photos.items.every(p => p.date <= albumLastDate)) {
+                    // stopAlbum = true; 
+                    // Risk: what if sort order is random? (Usually it is date desc).
+                    // Let's break.
+                    stopAlbum = true;
+                }
+
+                if (newItems.length > 0) {
+                    const insertTx = db.transaction((items) => {
+                        for (const p of items) {
+                            const bestUrl = getBestPhotoUrl(p.sizes);
+                            insertPhoto.run({
+                                id: p.id,
+                                owner_id: p.owner_id,
+                                album_id: p.album_id,
+                                album_title: album.title,
+                                url: bestUrl,
+                                caption: p.text || album.title,
+                                date: p.date,
+                                width: 0,
+                                height: 0
+                            });
+                        }
+                    });
+                    insertTx(newItems);
+                    totalPhotosSynced += newItems.length;
+                }
+
+                if (stopAlbum) {
+                    hasMorePhotos = false;
+                    break;
+                }
+
                 photoOffset += photos.items.length;
-
                 if (photoOffset >= photos.count) hasMorePhotos = false;
                 await sleep(150);
             } else {
