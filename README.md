@@ -9,7 +9,10 @@
 
 ---
 
-## 🚀 Elevator Pitch
+## 🚀 About
+
+<img width="1470" height="923" alt="Screenshot 2026-07-02 at 09 37 35" src="https://github.com/user-attachments/assets/1c4cae9e-6658-4f1a-8a9a-0c796167ec8d" />
+
 
 **Emozika Theatre** is a full-stack web platform that automates content management for a children's theatre by **extracting data from VK social media API**, transforming it via a SQLite-backed ETL pipeline, and rendering a performant, SEO-optimized static site. It eliminates the need for manual content updates while providing a premium user experience for parents browsing theatre programs, film projects, and educational offerings.
 
